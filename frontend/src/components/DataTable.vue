@@ -1,7 +1,11 @@
 <template>
   <div class="p-4">
+    <button @click="exportExcel"
+      class="mb-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+      Download Excel
+    </button><br><br>
     <!-- <h2 class="text-xl font-bold mb-2">Data Budget</h2> -->
-    <table border="1" cellpadding="6">
+    <table border="1" cellpadding="6" id="budget-table">
       <thead>
         <tr>
           <th rowspan="3">No</th>
@@ -293,6 +297,7 @@
 
 <script>
 import axios from "axios";
+import * as XLSX from "xlsx";
 
 export default {
   data() {
@@ -335,6 +340,13 @@ export default {
       return group[0][field] === group[1][field];
     }
     return false;
+    },
+    exportExcel() {
+      const table = document.getElementById("budget-table");
+      const wb = XLSX.utils.table_to_book(table, { sheet: "Budget" });
+
+      // langsung download
+      XLSX.writeFile(wb, "budget.xlsx");
     }
   }
 };
