@@ -1,12 +1,16 @@
 <template>
   <div class="p-4">
-    <button @click="exportExcel"
-      class="mb-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+    <button @click="exportExcel" class="mb-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
       Download Excel
     </button><br><br>
     <!-- <h2 class="text-xl font-bold mb-2">Data Budget</h2> -->
     <table border="1" cellpadding="6" id="budget-table">
       <thead>
+
+        <tr>
+          <th colspan="23"></th>
+          <th>22 Sep 2025</th>
+        </tr>
         <tr>
           <th rowspan="3">No</th>
           <th rowspan="3">Model</th>
@@ -46,7 +50,7 @@
           <th>Amount</th>
         </tr>
       </thead>
-       <tbody>
+      <tbody>
         <template v-for="(row, index) in budget_mat" :key="row.id">
           <!-- Jika Material biasa -->
           <tr v-if="row.name === 'Material'">
@@ -61,32 +65,31 @@
             <td v-if="shouldShowTotalItem(index)" :rowspan="3">
               {{ row.total_item }}
             </td>
-            <!-- <td>{{ row.total_item }}</td> -->
-            <td>{{ row.n0_pcs_forecast }}</td>
-            <td>{{ row.n0_kg_forecast }}</td>
-            <td>{{ row.n0_amount_forecast }}</td>
-            <td>{{ row.n0_pcs_act }}</td>
-            <td>{{ row.n0_kg_act }}</td>
-            <td>{{ row.n0_amount_act }}</td>
-            <td>{{ row.difference }}</td>
-            <td>{{ row.n_pcs_forecast }}</td>
-            <td>{{ row.n_kg_forecast }}</td>
-            <td>{{ row.n_amount_forecast }}</td>
-            <td>{{ row.n1_pcs_forecast }}</td>
-            <td>{{ row.n1_kg_forecast }}</td>
-            <td>{{ row.n1_amount_forecast }}</td>
-            <td>{{ row.n2_pcs_forecast }}</td>
-            <td>{{ row.n2_kg_forecast }}</td>
-            <td>{{ row.n2_amount_forecast }}</td>
-            <td>{{ row.n3_pcs_forecast }}</td>
-            <td>{{ row.n3_kg_forecast }}</td>
-            <td>{{ row.n3_amount_forecast }}</td>
+            <td>{{ formatNumber(row.n0_pcs_forecast) }}</td>
+            <td>{{ formatNumber(row.n0_kg_forecast) }}</td>
+            <td>{{ formatNumber(row.n0_amount_forecast) }}</td>
+            <td>{{ formatNumber(row.n0_pcs_act) }}</td>
+            <td>{{ formatNumber(row.n0_kg_act) }}</td>
+            <td>{{ formatNumber(row.n0_amount_act) }}</td>
+            <td>{{ formatNumber(row.difference) }}</td>
+            <td>{{ formatNumber(row.n_pcs_forecast) }}</td>
+            <td>{{ formatNumber(row.n_kg_forecast) }}</td>
+            <td>{{ formatNumber(row.n_amount_forecast) }}</td>
+            <td>{{ formatNumber(row.n1_pcs_forecast) }}</td>
+            <td>{{ formatNumber(row.n1_kg_forecast) }}</td>
+            <td>{{ formatNumber(row.n1_amount_forecast)}}</td>
+            <td>{{ formatNumber(row.n2_pcs_forecast) }}</td>
+            <td>{{ formatNumber(row.n2_kg_forecast) }}</td>
+            <td>{{ formatNumber(row.n2_amount_forecast) }}</td>
+            <td>{{ formatNumber(row.n3_pcs_forecast) }}</td>
+            <td>{{ formatNumber(row.n3_kg_forecast) }}</td>
+            <td>{{ formatNumber(row.n3_amount_forecast) }}</td>
           </tr>
 
           <!-- Jika CKD → buat 2 baris -->
           <template v-else-if="row.name === 'CKD PCS'">
             <!-- Baris CKD - PCS -->
-             <tr>
+            <tr>
               <td v-if="shouldShowNo(index)" :rowspan="2">
                 {{ row.nokol }}
               </td>
@@ -94,202 +97,163 @@
                 {{ row.model }}
               </td>
               <td rowspan="2">CKD</td>
+
+              <!-- Baris CKD PCS -->
               <td>PCS</td>
-              <!-- <td>{{ row.total_item }}</td> -->
-              <td v-if="isSameCKD(row.nokol, row.model, 'n0_pcs_forecast')" :rowspan="2">
-                {{ row.n0_pcs_forecast }}
-              </td>
-              <td v-else>
-                {{ row.n0_pcs_forecast }}
-              </td>
+
+              <!-- Merge kolom CKD PCS dan Transport -->
+              <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n0_pcs_forecast') }}</td>
+
               <td v-if="isSameCKD(row.nokol, row.model, 'n0_kg_forecast')" :rowspan="2">
-                {{ row.n0_kg_forecast }}
+                {{ formatNumber(row.n0_kg_forecast) }}
               </td>
               <td v-else>
-                {{ row.n0_kg_forecast }}
+                {{ formatNumber(row.n0_kg_forecast) }}
               </td>
-              <td v-if="isSameCKD(row.nokol, row.model, 'n0_amount_forecast')" :rowspan="2">
-                {{ row.n0_amount_forecast }}
+              <td>
+                {{ formatNumber(row.n0_amount_forecast) }}
               </td>
-              <td v-else>
-                {{ row.n0_amount_forecast }}
-              </td>
-              <td v-if="isSameCKD(row.nokol, row.model, 'n0_pcs_act')" :rowspan="2">
-                {{ row.n0_pcs_act}}
-              </td>
-              <td v-else>
-                {{ row.n0_pcs_act }}
-              </td>
+
+
+              <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n0_pcs_act') }}</td>
+
               <td v-if="isSameCKD(row.nokol, row.model, 'n0_kg_act')" :rowspan="2">
-                {{ row.n0_kg_act}}
+                {{ formatNumber(row.n0_kg_act) }}
               </td>
               <td v-else>
-                {{ row.n0_kg_act }}
+                {{ formatNumber(row.n0_kg_act)}}
               </td>
-              <td v-if="isSameCKD(row.nokol, row.model, 'n0_amount_act')" :rowspan="2">
-                {{ row.n0_amount_act }}
+              <td>
+                {{ formatNumber(row.n0_amount_act) }}
               </td>
-              <td v-else>
-                {{ row.n0_amount_act }}
-              </td>
-              <!-- <td>{{ row.n0_pcs_forecast }}</td> -->
-              <!-- <td>{{ row.n0_kg_forecast }}</td> -->
-              <!-- <td>{{ row.n0_amount_forecast }}</td> -->
-              <!-- <td>{{ row.n0_pcs_act }}</td>
-              <td>{{ row.n0_kg_act }}</td>
-              <td>{{ row.n0_amount_act }}</td> -->
-              <td>{{ row.difference }}</td>
-              <td v-if="isSameCKD(row.nokol, row.model, 'n_pcs_forecast')" :rowspan="2">
-                {{ row.n_pcs_forecast}}
-              </td>
-              <td v-else>
-                {{ row.n_pcs_forecast }}
-              </td>
+
+              <td>{{ formatNumber(row.difference) }}</td>
+
+
+              <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n_pcs_forecast') }}</td>
+
               <td v-if="isSameCKD(row.nokol, row.model, 'n_kg_forecast')" :rowspan="2">
-                {{ row.n_kg_forecast}}
+                {{formatNumber( row.n_kg_forecast) }}
               </td>
               <td v-else>
-                {{ row.n_kg_forecast }}
+                {{formatNumber( row.n_kg_forecast) }}
               </td>
-              <td v-if="isSameCKD(row.nokol, row.model, 'n_amount_forecast')" :rowspan="2">
-                {{ row.n_amount_forecast }}
+              <td>
+                {{ formatNumber(row.n_amount_forecast) }}
               </td>
-              <td v-else>
-                {{ row.n_amount_forecast }}
-              </td>
-              <!-- <td>{{ row.n_pcs_forecast }}</td>
-              <td>{{ row.n_kg_forecast }}</td>
-              <td>{{ row.n_amount_forecast }}</td> -->
-              <td v-if="isSameCKD(row.nokol, row.model, 'n1_pcs_forecast')" :rowspan="2">
-                {{ row.n1_pcs_forecast}}
-              </td>
-              <td v-else>
-                {{ row.n1_pcs_forecast }}
-              </td>
+
+              <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n1_pcs_forecast') }}</td>
+
               <td v-if="isSameCKD(row.nokol, row.model, 'n1_kg_forecast')" :rowspan="2">
-                {{ row.n1_kg_forecast}}
+                {{ formatNumber(row.n1_kg_forecast) }}
               </td>
               <td v-else>
-                {{ row.n1_kg_forecast }}
+                {{ formatNumber(row.n1_kg_forecast) }}
               </td>
-              <td v-if="isSameCKD(row.nokol, row.model, 'n1_amount_forecast')" :rowspan="2">
-                {{ row.n1_amount_forecast }}
+              <td>
+                {{ formatNumber(row.n1_amount_forecast) }}
               </td>
-              <td v-else>
-                {{ row.n1_amount_forecast}}
-              </td>
-              <!-- <td>{{ row.n1_pcs_forecast }}</td>
-              <td>{{ row.n1_kg_forecast }}</td>
-              <td>{{ row.n1_amount_forecast }}</td> -->
-              <td v-if="isSameCKD(row.nokol, row.model, 'n2_pcs_forecast')" :rowspan="2">
-                {{ row.n2_pcs_forecast}}
-              </td>
-              <td v-else>
-                {{ row.n2_pcs_forecast }}
-              </td>
+
+              <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n2_pcs_forecast') }}</td>
+
               <td v-if="isSameCKD(row.nokol, row.model, 'n2_kg_forecast')" :rowspan="2">
-                {{ row.n2_kg_forecast}}
+                {{ formatNumber(row.n2_kg_forecast) }}
               </td>
               <td v-else>
-                {{ row.n2_kg_forecast }}
+                {{ formatNumber(row.n2_kg_forecast) }}
               </td>
-              <td v-if="isSameCKD(row.nokol, row.model, 'n2_amount_forecast')" :rowspan="2">
-                {{ row.n2_amount_forecast }}
+              <td>
+                {{ formatNumber(row.n2_amount_forecast) }}
               </td>
-              <td v-else>
-                {{ row.n2_amount_forecast}}
-              </td>
-              <!-- <td>{{ row.n2_pcs_forecast }}</td>
-              <td>{{ row.n2_kg_forecast }}</td>
-              <td>{{ row.n2_amount_forecast }}</td> -->
-              <td v-if="isSameCKD(row.nokol, row.model, 'n3_pcs_forecast')" :rowspan="2">
-                {{ row.n3_pcs_forecast}}
-              </td>
-              <td v-else>
-                {{ row.n3_pcs_forecast }}
-              </td>
+
+              <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n3_pcs_forecast') }}</td>
+
               <td v-if="isSameCKD(row.nokol, row.model, 'n3_kg_forecast')" :rowspan="2">
-                {{ row.n3_kg_forecast}}
+                {{ formatNumber(row.n3_kg_forecast) }}
               </td>
               <td v-else>
-                {{ row.n3_kg_forecast }}
+                {{ formatNumber(row.n3_kg_forecast) }}
               </td>
-              <td v-if="isSameCKD(row.nokol, row.model, 'n3_amount_forecast')" :rowspan="2">
-                {{ row.n3_amount_forecast }}
+              <td>
+                {{ formatNumber(row.n3_amount_forecast) }}
               </td>
-              <td v-else>
-                {{ row.n3_amount_forecast}}
-              </td>
-              <!-- <td>{{ row.n3_pcs_forecast }}</td>
-              <td>{{ row.n3_kg_forecast }}</td>
-              <td>{{ row.n3_amount_forecast }}</td> -->
             </tr>
           </template>
           <template v-else-if="row.name === 'CKD Transport'">
             <!-- Baris CKD - Transport -->
             <tr>
               <td>Transport</td>
-              <td v-if="!isSameCKD(row.nokol, row.model, 'n0_pcs_forecast')">
-                {{ row.n0_pcs_forecast }}
-              </td>
+
               <td v-if="!isSameCKD(row.nokol, row.model, 'n0_kg_forecast')">
-                {{ row.n0_kg_forecast }}
+                {{ formatNumber(row.n0_kg_forecast) }}
               </td>
               <td v-if="!isSameCKD(row.nokol, row.model, 'n0_amount_forecast')">
-                {{ row.n0_amount_forecast }}
+                {{ formatNumber(row.n0_amount_forecast) }}
               </td>
-              <td v-if="!isSameCKD(row.nokol, row.model, 'n0_pcs_act')">
-                {{ row.n0_pcs_act }}
-              </td>
+
               <td v-if="!isSameCKD(row.nokol, row.model, 'n0_kg_act')">
-                {{ row.n0_kg_act }}
+                {{ formatNumber(row.n0_kg_act) }}
               </td>
               <td v-if="!isSameCKD(row.nokol, row.model, 'n0_amount_act')">
-                {{ row.n0_amount_act}}
+                {{ formatNumber(row.n0_amount_act_) }}
               </td>
+
               <td>{{ row.difference }}</td>
 
-              <td v-if="!isSameCKD(row.nokol, row.model, 'n_pcs_forecast')">
-                {{ row.n_pcs_forecast }}
-              </td>
               <td v-if="!isSameCKD(row.nokol, row.model, 'n_kg_forecast')">
-                {{ row.n_kg_forecast }}
+                {{ formatNumber(row.n_kg_forecast) }}
               </td>
               <td v-if="!isSameCKD(row.nokol, row.model, 'n_amount_forecast')">
-                {{ row.n_amount_forecast }}
+                {{ formatNumber(row.n_amount_forecast) }}
               </td>
-              <td v-if="!isSameCKD(row.nokol, row.model, 'n1_pcs_forecast')">
-                {{ row.n1_pcs_forecast }}
-              </td>
+
               <td v-if="!isSameCKD(row.nokol, row.model, 'n1_kg_forecast')">
-                {{ row.n1_kg_forecast }}
+                {{ formatNumber(row.n1_kg_forecast)}}
               </td>
               <td v-if="!isSameCKD(row.nokol, row.model, 'n1_amount_forecast')">
-                {{ row.n1_amount_forecast }}
+                {{ formatNumber(row.n1_amount_forecast) }}
               </td>
-              <td v-if="!isSameCKD(row.nokol, row.model, 'n2_pcs_forecast')">
-                {{ row.n2_pcs_forecast }}
-              </td>
+
               <td v-if="!isSameCKD(row.nokol, row.model, 'n2_kg_forecast')">
-                {{ row.n2_kg_forecast }}
+                {{ formatNumber(row.n2_kg_forecast) }}
               </td>
               <td v-if="!isSameCKD(row.nokol, row.model, 'n2_amount_forecast')">
-                {{ row.n2_amount_forecast }}
+                {{ formatNumber(row.n2_amount_forecast) }}
               </td>
-               <td v-if="!isSameCKD(row.nokol, row.model, 'n3_pcs_forecast')">
-                {{ row.n3_pcs_forecast }}
-              </td>
+
               <td v-if="!isSameCKD(row.nokol, row.model, 'n3_kg_forecast')">
-                {{ row.n3_kg_forecast }}
+                {{ formatNumber(row.n3_kg_forecast) }}
               </td>
               <td v-if="!isSameCKD(row.nokol, row.model, 'n3_amount_forecast')">
-                {{ row.n3_amount_forecast }}
+                {{ formatNumber(row.n3_amount_forecast) }}
               </td>
 
             </tr>
           </template>
-
         </template>
+        <tr>
+          <td colspan="4">Total</td>
+          <td>{{ totalColumns.total_item }}</td>
+          <td>{{ totalColumns.n0_pcs_forecast }}</td>
+          <td>{{ totalColumns.n0_kg_forecast }}</td>
+          <td>{{ totalColumns.n0_amount_forecast }}</td>
+          <td>{{ totalColumns.n0_pcs_act }}</td>
+          <td>{{ totalColumns.n0_kg_act }}</td>
+          <td>{{ totalColumns.n0_amount_act }}</td>
+          <td></td> <!-- kolom Diff bisa dikosongi atau hitung sendiri -->
+          <td>{{ totalColumns.n_pcs_forecast }}</td>
+          <td>{{ totalColumns.n_kg_forecast }}</td>
+          <td>{{ totalColumns.n_amount_forecast }}</td>
+          <td>{{ totalColumns.n1_pcs_forecast }}</td>
+          <td>{{ totalColumns.n1_kg_forecast }}</td>
+          <td>{{ totalColumns.n1_amount_forecast }}</td>
+          <td>{{ totalColumns.n2_pcs_forecast }}</td>
+          <td>{{ totalColumns.n2_kg_forecast }}</td>
+          <td>{{ totalColumns.n2_amount_forecast }}</td>
+          <td>{{ totalColumns.n3_pcs_forecast }}</td>
+          <td>{{ totalColumns.n3_kg_forecast }}</td>
+          <td>{{ totalColumns.n3_amount_forecast }}</td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -331,15 +295,36 @@ export default {
       return this.budget_mat[index].model !== this.budget_mat[index - 1].model;
     },
     shouldShowTotalItem(index) {
-    if (index === 0) return true;
-    return this.budget_mat[index].total_item !== this.budget_mat[index - 1].total_item;
+      if (index === 0) return true;
+      return this.budget_mat[index].total_item !== this.budget_mat[index - 1].total_item;
     },
     isSameCKD(no, model, field) {
-    const group = this.budget_mat.filter(r => r.nokol === no && r.model === model && (r.name === "CKD PCS" || r.name === "CKD Transport"));
-    if (group.length === 2) {
-      return group[0][field] === group[1][field];
-    }
-    return false;
+      const group = this.budget_mat.filter(r => r.nokol === no && r.model === model && (r.name === "CKD PCS" || r.name === "CKD Transport"));
+      if (group.length === 2) {
+        return group[0][field] === group[1][field];
+      }
+      return false;
+    },
+    sumCKD(no, model, field) {
+      const group = this.budget_mat.filter(
+        r => r.nokol === no && r.model === model && (r.name === "CKD PCS" || r.name === "CKD Transport")
+      );
+
+      // jumlahkan field dari PCS + Transport
+      return group.reduce((total, r) => {
+        return total + (parseFloat(r[field]) || 0);
+      }, 0);
+    },
+
+    formatNumber(value) {
+      if (value == null || value === "") return "";
+      const num = Number(value);
+      return num.toFixed(3).replace(/\.?0+$/, "");
+    },
+    sumMaterial(row) {
+      const pcs = parseFloat(row.total_item) || 0;
+      const transport = parseFloat(row.total_item) || 0;
+      return this.formatNumber(pcs + transport);
     },
     exportExcel() {
       const table = document.getElementById("budget-table");
@@ -348,6 +333,44 @@ export default {
       // langsung download
       XLSX.writeFile(wb, "budget.xlsx");
     }
+  },
+
+  computed: {
+    totalColumns() {
+      const totals = {
+        total_item: 0,
+        n0_pcs_forecast: 0,
+        n0_kg_forecast: 0,
+        n0_amount_forecast: 0,
+        n0_pcs_act: 0,
+        n0_kg_act: 0,
+        n0_amount_act: 0,
+        n_pcs_forecast: 0,
+        n_kg_forecast: 0,
+        n_amount_forecast: 0,
+        n1_pcs_forecast: 0,
+        n1_kg_forecast: 0,
+        n1_amount_forecast: 0,
+        n2_pcs_forecast: 0,
+        n2_kg_forecast: 0,
+        n2_amount_forecast: 0,
+        n3_pcs_forecast: 0,
+        n3_kg_forecast: 0,
+        n3_amount_forecast: 0
+      };
+
+      this.budget_mat.forEach(row => {
+        for (let key in totals) {
+          totals[key] += parseFloat(row[key]) || 0;
+        }
+      });
+
+      for (let key in totals) {
+      totals[key] = Math.round(totals[key]); // bisa ganti ke Math.floor / Math.ceil sesuai kebutuhan
+    }
+      return totals;
+    }
   }
+
 };
 </script>
