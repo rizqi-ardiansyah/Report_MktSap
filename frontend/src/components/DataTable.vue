@@ -1,32 +1,54 @@
 <template>
-  <div class="p-4">
-    <button @click="exportExcel" class="mb-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
-      Download Excel
-    </button><br><br>
-    <!-- <h2 class="text-xl font-bold mb-2">Data Budget</h2> -->
-    <table border="1" cellpadding="6" id="budget-table">
-      <thead>
+  <div class="a4-page">
+    <!-- Report Header -->
+    <div class="report-header">
+      <div class="logo">
+        <!-- replace with your logo path in /public -->
+        <img src="../assets/logo.png" alt="Company Logo" />
+      </div>
+      <div class="header-info">
+        <p><strong>TITLE</strong> : BUDGET PEMBELIAN MATERIAL & CKD SEPTEMBER 2025</p>
+        <p><strong>PROJECT</strong> : SU2ID & KS</p>
+        <p><strong>CUSTOMER</strong> : PT HMMI</p>
+      </div>
+      <div class="rev-date">
+        <p><strong>REV.</strong> 00</p>
+        <p>24 September 2025</p>
+      </div>
+    </div>
 
+
+    <!-- <h2 class="text-xl font-bold mb-2">Data Budget</h2> -->
+    <table class="report-table" border="1" id="budget-table">
+      <thead>
         <tr>
-          <th colspan="23"></th>
-          <th>22 Sep 2025</th>
+          <th style="background-color: white;" colspan="23"></th>
+          <th style="background-color: white;">22 Sep 2025</th>
         </tr>
         <tr>
-          <th rowspan="3">No</th>
-          <th rowspan="3">Model</th>
-          <th rowspan="3" colspan="2">Material/CKD</th>
-          <th rowspan="3">Σ Item</th>
+          <th rowspan="4" style="width:10px; text-align:center;">No</th>
+          <th rowspan="4">Model</th>
+          <th rowspan="4" colspan="2">Material/CKD</th>
+          <th rowspan="4">Σ Item V <br>to V / <br>Gpart</th>
           <!-- Bulan -->
-          <th colspan="20">Budget Material & CKD</th>
+          <th colspan="19" style="font-size: 14px; font-weight: bold;">Budget Material & CKD</th>
         </tr>
         <tr>
-          <th colspan="3">Aug-25 (Forecast)</th>
-          <th colspan="3">Aug-25 (Actual)</th>
-          <th rowspan="2">Diff</th>
-          <th colspan="3">Sep-25 (Forecast)</th>
-          <th colspan="3">Oct-25 (Forecast)</th>
-          <th colspan="3">Nov-25 (Forecast)</th>
-          <th colspan="3">Dec-25 (Forecast)</th>
+          <th colspan="3">Aug-25</th>
+          <th colspan="3">Aug-25</th>
+          <th rowspan="3">Diff</th>
+          <th colspan="3">Sep-25</th>
+          <th colspan="3">Oct-25</th>
+          <th colspan="3">Nov-25</th>
+          <th colspan="3">Dec-25</th>
+        </tr>
+        <tr>
+          <th colspan="3">Forecast</th>
+          <th colspan="3">Actual</th>
+          <th colspan="3">Forecast</th>
+          <th colspan="3">Forecast</th>
+          <th colspan="3">Forecast</th>
+          <th colspan="3">Forecast</th>
         </tr>
         <tr>
           <!-- Sub kolom -->
@@ -240,7 +262,7 @@
           <td>{{ totalColumns.n0_pcs_act }}</td>
           <td>{{ totalColumns.n0_kg_act }}</td>
           <td>{{ totalColumns.n0_amount_act }}</td>
-          <td></td> <!-- kolom Diff bisa dikosongi atau hitung sendiri -->
+          <td>{{ formatNumber(totalDiff)}}</td> <!-- kolom Diff bisa dikosongi atau hitung sendiri -->
           <td>{{ totalColumns.n_pcs_forecast }}</td>
           <td>{{ totalColumns.n_kg_forecast }}</td>
           <td>{{ totalColumns.n_amount_forecast }}</td>
@@ -256,6 +278,10 @@
         </tr>
       </tbody>
     </table>
+      <br><br>
+     <button @click="exportExcel" class="mb-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+      Download Excel
+    </button><br><br>
   </div>
 </template>
 
@@ -369,6 +395,16 @@ export default {
       totals[key] = Math.round(totals[key]); // bisa ganti ke Math.floor / Math.ceil sesuai kebutuhan
     }
       return totals;
+    },
+
+    totalDiff(){
+      const {n0_amount_act, n0_amount_forecast} = this.totalColumns;
+
+      if(!n0_amount_forecast){
+        return 0;
+      }
+
+      return (n0_amount_act-n0_amount_forecast)/n0_amount_act;
     }
   }
 
