@@ -8,6 +8,12 @@
     <table border="1" cellpadding="6" id="budget-table">
       <thead>
         <tr>
+          <th colspan = "23"></th>
+          <th style="text-align: right; font-style: italic; font-size: 14px;">
+            23 Sep 2025
+          </th>
+        </tr>
+        <tr>
           <th rowspan="3">No</th>
           <th rowspan="3">Model</th>
           <th rowspan="3" colspan="2">Material/CKD</th>
