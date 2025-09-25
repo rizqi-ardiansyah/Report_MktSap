@@ -140,6 +140,41 @@ td {
   /* wrap text if too long */
 }
 
+/* Volume Tables (bottom left corner) */
+.volume-section {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 10px;
+  margin-top: 10px;
+  font-size: 9px;
+  justify-content: flex-start;
+}
+
+.volume-table {
+  border: 1px solid #000;
+  display: inline-block;
+}
+
+.volume-table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.volume-table th,
+.volume-table td {
+  border: 1px solid #000;
+  padding: 2px 4px;
+  text-align: center;
+}
+
+.volume-title {
+  font-weight: bold;
+  text-align: center;
+  margin: 3px 0 0 0;
+  font-size: 9px;
+}
+
+
 .notes-section {
   font-size: 10.5px;
   margin-top: 5px;

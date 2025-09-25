@@ -101,7 +101,7 @@
             <td>{{ formatNumber(row.n0_kg_act) }}</td>
             <td>{{ formatNumber(row.n0_amount_act) }}</td>
 
-            <td style="color: red;">{{ formatNumber(row.difference) }}%</td>
+            <td style="color: red;">{{ formatNumber((row.difference*100)) }}%</td>
 
             <td>{{ formatNumber(row.n_pcs_forecast) }}</td>
             <td>{{ formatNumber(row.n_kg_forecast) }}</td>
@@ -158,7 +158,7 @@
                 {{ formatNumber(row.n0_amount_act) }}
               </td>
 
-              <td style="color: red;">{{ formatNumber(row.difference) }}%</td>
+              <td style="color: red;">{{ formatNumber(row.difference*100) }}%</td>
 
 
               <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n_pcs_forecast') }}</td>
@@ -225,11 +225,12 @@
               <td v-if="!isSameCKD(row.nokol, row.model, 'n0_kg_act')">
                 {{ formatNumber(row.n0_kg_act) }}
               </td>
+
               <td v-if="!isSameCKD(row.nokol, row.model, 'n0_amount_act')">
-                {{ formatNumber(row.n0_amount_act_) }}
+                {{ formatNumber(row.n0_amount_act) }}
               </td>
 
-              <td style="color: red">{{ row.difference }}%</td>
+              <td style="color: red">{{ row.difference * 100 }}%</td>
 
               <td v-if="!isSameCKD(row.nokol, row.model, 'n_kg_forecast')">
                 {{ formatNumber(row.n_kg_forecast) }}
@@ -271,7 +272,7 @@
           <td class="bold">{{ formatNumber(totalColumns.n0_pcs_act) }}</td>
           <td class="bold">{{ formatNumber(totalColumns.n0_kg_act) }}</td>
           <td class="bold">{{ formatNumber(totalColumns.n0_amount_act) }}</td>
-          <td style="color: red; font-weight: bold;">{{ totalDiff.toFixed(2) }}%</td>
+          <td style="color: red; font-weight: bold;">{{ totalDiff.toFixed(0) }}%</td>
           <td class="bold">{{ formatNumber(totalColumns.n_pcs_forecast) }}</td>
           <td class="bold">{{ formatNumber(totalColumns.n_kg_forecast) }}</td>
           <td class="bold">{{ formatNumber(totalColumns.n_amount_forecast) }}</td>
@@ -291,6 +292,140 @@
     <button @click="exportExcel" class="mb-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
       Download Excel
     </button><br><br> -->
+
+    <!-- Volume Tables Section -->
+<div class="volume-section">
+  <div class="volume-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Var</th>
+          <th>Aug-25</th>
+          <th>Sep-25</th>
+          <th>Oct-25</th>
+          <th>Nov-25</th>
+          <th>Dec-25</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ALL</td>
+          <td>1,275</td>
+          <td>2,215</td>
+          <td>1,860</td>
+          <td>2,020</td>
+          <td>1,900</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="volume-title">Volume Unit Model SU2ID D</p>
+  </div>
+
+  <div class="volume-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Var</th>
+          <th>Aug-25</th>
+          <th>Sep-25</th>
+          <th>Oct-25</th>
+          <th>Nov-25</th>
+          <th>Dec-25</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ALL</td>
+          <td>3,875</td>
+          <td>3,905</td>
+          <td>4,020</td>
+          <td>3,760</td>
+          <td>4,125</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="volume-title">Volume Unit Model KS</p>
+  </div>
+
+  <div class="volume-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Var</th>
+          <th>Aug-25</th>
+          <th>Sep-25</th>
+          <th>Oct-25</th>
+          <th>Nov-25</th>
+          <th>Dec-25</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ALL</td>
+          <td>2,640</td>
+          <td>2,710</td>
+          <td>2,530</td>
+          <td>2,660</td>
+          <td>2,775</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="volume-title">Volume Unit Model SU2ID H</p>
+  </div>
+
+  <div class="volume-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Var</th>
+          <th>Aug-25</th>
+          <th>Sep-25</th>
+          <th>Oct-25</th>
+          <th>Nov-25</th>
+          <th>Dec-25</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ALL</td>
+          <td>7,790</td>
+          <td>8,015</td>
+          <td>8,410</td>
+          <td>8,250</td>
+          <td>8,575</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="volume-title">Volume Unit Model KS FL</p>
+  </div>
+
+  <div class="volume-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Var</th>
+          <th>Aug-25</th>
+          <th>Sep-25</th>
+          <th>Oct-25</th>
+          <th>Nov-25</th>
+          <th>Dec-25</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ALL</td>
+          <td>15,580</td>
+          <td>16,845</td>
+          <td>16,820</td>
+          <td>16,690</td>
+          <td>17,375</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="volume-title">Volume Unit ALL Model</p>
+  </div>
+</div>
+
 
     <!-- Notes Section -->
     <div class="notes-section">
