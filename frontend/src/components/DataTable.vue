@@ -1,487 +1,603 @@
 <template>
-  <div class="a4-page">
-    <!-- Report Header -->
-    <div class="report-header">
-      <div class="logo">
-        <!-- replace with your logo path in /public -->
-        <img src="../assets/logo.png" alt="Company Logo" />
-      </div>
-      <div class="header-info">
-        <div class="row">
-          <span class="label bold">TITLE</span>
-          <span class="value bold">: BUDGET PEMBELIAN MATERIAL & CKD SEPTEMBER 2025</span>
+  <div id="printArea" class="a4-page">
+    <!-- For Make Border -->
+    <div class="report-container">
+      <!-- Report Header -->
+      <div class="report-header">
+        <div class="logo">
+          <!-- replace with your logo path in /public -->
+          <img src="../assets/logo.png" alt="Company Logo" />
         </div>
-        <div class="row">
-          <span class="label bold">PROJECT</span>
-          <span class="value bold">: SU2ID & KS</span>
+        <div class="header-info">
+          <div class="row">
+            <span class="label bold">TITLE</span>
+            <span class="value bold">: BUDGET PEMBELIAN MATERIAL & CKD SEPTEMBER 2025</span>
+          </div>
+          <div class="row">
+            <span class="label bold">PROJECT</span>
+            <span class="value bold">: SU2ID & KS</span>
+          </div>
+          <div class="row">
+            <span class="label bold">CUSTOMER</span>
+            <span class="value bold">: PT HMMI</span>
+          </div>
         </div>
-        <div class="row">
-          <span class="label bold">CUSTOMER</span>
-          <span class="value bold">: PT HMMI</span>
+        <div class="rev">
+          <p style="font-weight: bold;">REV. 00</p>
         </div>
       </div>
-      <div class="rev">
-        <p style="font-weight: bold;">REV. 00</p>
-      </div>
-    </div>
 
-
-    <!-- <h2 class="text-xl font-bold mb-2">Data Budget</h2> -->
-    <table class="report-table" id="budget-table">
-      <thead>
-        <tr>
-          <th style="background-color: white; border: none;" colspan="21"></th>
-          <th colspan="3" style="background-color: white; font-style: italic;">{{ formattedDate }}</th>
-        </tr>
-        <tr>
-          <th rowspan="4" style="width:10px; text-align:center;">No</th>
-          <th rowspan="4">Model</th>
-          <th rowspan="4" colspan="2">Material/CKD</th>
-          <th rowspan="4">Σ Item <br> V to V / <br>Gpart</th>
-          <!-- Bulan -->
-          <th colspan="19" style="font-size: 14px; font-weight: bold;">BUDGET MATERIAL & CKD</th>
-        </tr>
-        <tr>
-          <th colspan="6">Aug-25</th>
-          <th rowspan="3">DIFF</th>
-          <th colspan="3">Sep-25</th>
-          <th colspan="3">Oct-25</th>
-          <th colspan="3">Nov-25</th>
-          <th colspan="3">Dec-25</th>
-        </tr>
-        <tr>
-          <th colspan="3">FORECAST</th>
-          <th colspan="3">ACTUAL</th>
-          <th colspan="3">FORECAST</th>
-          <th colspan="3">FORECAST</th>
-          <th colspan="3">FORECAST</th>
-          <th colspan="3">FORECAST</th>
-        </tr>
-        <tr>
-          <!-- Sub kolom -->
-          <th class="italic">PCS</th>
-          <th class="italic">KG</th>
-          <th class="italic">AMOUNT <br>(x1000)</th>
-          <th class="italic">PCS</th>
-          <th class="italic">KG</th>
-          <th class="italic">AMOUNT <br>(x1000)</th>
-          <th class="italic">PCS</th>
-          <th class="italic">KG</th>
-          <th class="italic">AMOUNT <br>(x1000)</th>
-          <th class="italic">PCS</th>
-          <th class="italic">KG</th>
-          <th class="italic">AMOUNT <br>(x1000)</th>
-          <th class="italic">PCS</th>
-          <th class="italic">KG</th>
-          <th class="italic">AMOUNT <br>(x1000)</th>
-          <th class="italic">PCS</th>
-          <th class="italic">KG</th>
-          <th class="italic">AMOUNT <br>(x1000)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <template v-for="(row, index) in budget_mat" :key="row.id">
-          <!-- Jika Material biasa -->
-          <tr v-if="row.name === 'Material'">
-            <td v-if="shouldShowNo(index)" :rowspan="rowspanNo(row.nokol)" class="bold">
-              {{ row.nokol }}
-            </td>
-            <td v-if="shouldShowModel(index)" :rowspan="rowspanModel(row.nokol, row.model)" class="bold">
-              {{ row.model }}
-            </td>
-            <td colspan="2" class="bold">Material</td>
-            <!-- Σ Item (merge) -->
-            <td v-if="shouldShowTotalItem(index)" :rowspan="3">
-              {{ row.total_item }}
-            </td>
-            <td>{{ formatNumber(row.n0_pcs_forecast) }}</td>
-            <td>{{ formatNumber(row.n0_kg_forecast) }}</td>
-            <td>{{ formatNumber(row.n0_amount_forecast) }}</td>
-            <td>{{ formatNumber(row.n0_pcs_act) }}</td>
-            <td>{{ formatNumber(row.n0_kg_act) }}</td>
-            <td>{{ formatNumber(row.n0_amount_act) }}</td>
-
-            <td style="color: red;">{{ formatNumber((row.difference*100)) }}%</td>
-
-            <td>{{ formatNumber(row.n_pcs_forecast) }}</td>
-            <td>{{ formatNumber(row.n_kg_forecast) }}</td>
-            <td>{{ formatNumber(row.n_amount_forecast) }}</td>
-            <td>{{ formatNumber(row.n1_pcs_forecast) }}</td>
-            <td>{{ formatNumber(row.n1_kg_forecast) }}</td>
-            <td>{{ formatNumber(row.n1_amount_forecast) }}</td>
-            <td>{{ formatNumber(row.n2_pcs_forecast) }}</td>
-            <td>{{ formatNumber(row.n2_kg_forecast) }}</td>
-            <td>{{ formatNumber(row.n2_amount_forecast) }}</td>
-            <td>{{ formatNumber(row.n3_pcs_forecast) }}</td>
-            <td>{{ formatNumber(row.n3_kg_forecast) }}</td>
-            <td>{{ formatNumber(row.n3_amount_forecast) }}</td>
-          </tr>
-
-          <!-- Jika CKD → buat 2 baris -->
-          <template v-else-if="row.name === 'CKD PCS'">
-            <!-- Baris CKD - PCS -->
-            <tr>
-              <td v-if="shouldShowNo(index)" :rowspan="2">
-                {{ row.nokol }}
-              </td>
-              <td v-if="shouldShowModel(index)" :rowspan="2">
-                {{ row.model }}
-              </td>
-              <td rowspan="2" class="bold">CKD</td>
-
-              <!-- Baris CKD PCS -->
-              <td class="bold">PCS</td>
-
-              <!-- Merge kolom CKD PCS dan Transport -->
-              <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n0_pcs_forecast') }}</td>
-
-              <td v-if="isSameCKD(row.nokol, row.model, 'n0_kg_forecast')" :rowspan="2">
-                {{ formatNumber(row.n0_kg_forecast) }}
-              </td>
-              <td v-else>
-                {{ formatNumber(row.n0_kg_forecast) }}
-              </td>
-              <td>
-                {{ formatNumber(row.n0_amount_forecast) }}
-              </td>
-
-
-              <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n0_pcs_act') }}</td>
-
-              <td v-if="isSameCKD(row.nokol, row.model, 'n0_kg_act')" :rowspan="2">
-                {{ formatNumber(row.n0_kg_act) }}
-              </td>
-              <td v-else>
-                {{ formatNumber(row.n0_kg_act) }}
-              </td>
-              <td>
-                {{ formatNumber(row.n0_amount_act) }}
-              </td>
-
-              <td style="color: red;">{{ formatNumber(row.difference*100) }}%</td>
-
-
-              <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n_pcs_forecast') }}</td>
-
-              <td v-if="isSameCKD(row.nokol, row.model, 'n_kg_forecast')" :rowspan="2">
-                {{ formatNumber(row.n_kg_forecast) }}
-              </td>
-              <td v-else>
-                {{ formatNumber(row.n_kg_forecast) }}
-              </td>
-              <td>
-                {{ formatNumber(row.n_amount_forecast) }}
-              </td>
-
-              <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n1_pcs_forecast') }}</td>
-
-              <td v-if="isSameCKD(row.nokol, row.model, 'n1_kg_forecast')" :rowspan="2">
-                {{ formatNumber(row.n1_kg_forecast) }}
-              </td>
-              <td v-else>
-                {{ formatNumber(row.n1_kg_forecast) }}
-              </td>
-              <td>
-                {{ formatNumber(row.n1_amount_forecast) }}
-              </td>
-
-              <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n2_pcs_forecast') }}</td>
-
-              <td v-if="isSameCKD(row.nokol, row.model, 'n2_kg_forecast')" :rowspan="2">
-                {{ formatNumber(row.n2_kg_forecast) }}
-              </td>
-              <td v-else>
-                {{ formatNumber(row.n2_kg_forecast) }}
-              </td>
-              <td>
-                {{ formatNumber(row.n2_amount_forecast) }}
-              </td>
-
-              <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n3_pcs_forecast') }}</td>
-
-              <td v-if="isSameCKD(row.nokol, row.model, 'n3_kg_forecast')" :rowspan="2">
-                {{ formatNumber(row.n3_kg_forecast) }}
-              </td>
-              <td v-else>
-                {{ formatNumber(row.n3_kg_forecast) }}
-              </td>
-              <td>
-                {{ formatNumber(row.n3_amount_forecast) }}
-              </td>
-            </tr>
-          </template>
-          <template v-else-if="row.name === 'CKD Transport'">
-            <!-- Baris CKD - Transport -->
-            <tr>
-              <td class="bold">Transport</td>
-
-              <td v-if="!isSameCKD(row.nokol, row.model, 'n0_kg_forecast')">
-                {{ formatNumber(row.n0_kg_forecast) }}
-              </td>
-              <td v-if="!isSameCKD(row.nokol, row.model, 'n0_amount_forecast')">
-                {{ formatNumber(row.n0_amount_forecast) }}
-              </td>
-
-              <td v-if="!isSameCKD(row.nokol, row.model, 'n0_kg_act')">
-                {{ formatNumber(row.n0_kg_act) }}
-              </td>
-
-              <td v-if="!isSameCKD(row.nokol, row.model, 'n0_amount_act')">
-                {{ formatNumber(row.n0_amount_act) }}
-              </td>
-
-              <td style="color: red">{{ row.difference * 100 }}%</td>
-
-              <td v-if="!isSameCKD(row.nokol, row.model, 'n_kg_forecast')">
-                {{ formatNumber(row.n_kg_forecast) }}
-              </td>
-              <td v-if="!isSameCKD(row.nokol, row.model, 'n_amount_forecast')">
-                {{ formatNumber(row.n_amount_forecast) }}
-              </td>
-
-              <td v-if="!isSameCKD(row.nokol, row.model, 'n1_kg_forecast')">
-                {{ formatNumber(row.n1_kg_forecast) }}
-              </td>
-              <td v-if="!isSameCKD(row.nokol, row.model, 'n1_amount_forecast')">
-                {{ formatNumber(row.n1_amount_forecast) }}
-              </td>
-
-              <td v-if="!isSameCKD(row.nokol, row.model, 'n2_kg_forecast')">
-                {{ formatNumber(row.n2_kg_forecast) }}
-              </td>
-              <td v-if="!isSameCKD(row.nokol, row.model, 'n2_amount_forecast')">
-                {{ formatNumber(row.n2_amount_forecast) }}
-              </td>
-
-              <td v-if="!isSameCKD(row.nokol, row.model, 'n3_kg_forecast')">
-                {{ formatNumber(row.n3_kg_forecast) }}
-              </td>
-              <td v-if="!isSameCKD(row.nokol, row.model, 'n3_amount_forecast')">
-                {{ formatNumber(row.n3_amount_forecast) }}
-              </td>
-
-            </tr>
-          </template>
-        </template>
-        <tr>
-          <td class="bold" colspan="4">Total</td>
-          <td class="bold">{{ totalColumns.total_item }}</td>
-          <td class="bold">{{ formatNumber(totalColumns.n0_pcs_forecast) }}</td>
-          <td class="bold">{{ formatNumber(totalColumns.n0_kg_forecast) }}</td>
-          <td class="bold">{{ formatNumber(totalColumns.n0_amount_forecast) }}</td>
-          <td class="bold">{{ formatNumber(totalColumns.n0_pcs_act) }}</td>
-          <td class="bold">{{ formatNumber(totalColumns.n0_kg_act) }}</td>
-          <td class="bold">{{ formatNumber(totalColumns.n0_amount_act) }}</td>
-          <td style="color: red; font-weight: bold;">{{ totalDiff.toFixed(0) }}%</td>
-          <td class="bold">{{ formatNumber(totalColumns.n_pcs_forecast) }}</td>
-          <td class="bold">{{ formatNumber(totalColumns.n_kg_forecast) }}</td>
-          <td class="bold">{{ formatNumber(totalColumns.n_amount_forecast) }}</td>
-          <td class="bold">{{ formatNumber(totalColumns.n1_pcs_forecast) }}</td>
-          <td class="bold">{{ formatNumber(totalColumns.n1_kg_forecast) }}</td>
-          <td class="bold">{{ formatNumber(totalColumns.n1_amount_forecast) }}</td>
-          <td class="bold">{{ formatNumber(totalColumns.n2_pcs_forecast) }}</td>
-          <td class="bold">{{ formatNumber(totalColumns.n2_kg_forecast) }}</td>
-          <td class="bold">{{ formatNumber(totalColumns.n2_amount_forecast) }}</td>
-          <td class="bold">{{ formatNumber(totalColumns.n3_pcs_forecast) }}</td>
-          <td class="bold">{{ formatNumber(totalColumns.n3_kg_forecast) }}</td>
-          <td class="bold">{{ formatNumber(totalColumns.n3_amount_forecast) }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <!-- <br><br>
-    <button @click="exportExcel" class="mb-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
-      Download Excel
-    </button><br><br> -->
-
-    <!-- Volume Tables Section -->
-<div class="volume-section">
-  <div class="volume-table">
-    <table>
-      <thead>
-        <tr>
-          <th>Var</th>
-          <th>Aug-25</th>
-          <th>Sep-25</th>
-          <th>Oct-25</th>
-          <th>Nov-25</th>
-          <th>Dec-25</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>ALL</td>
-          <td>1,275</td>
-          <td>2,215</td>
-          <td>1,860</td>
-          <td>2,020</td>
-          <td>1,900</td>
-        </tr>
-      </tbody>
-    </table>
-    <p class="volume-title">Volume Unit Model SU2ID D</p>
-  </div>
-
-  <div class="volume-table">
-    <table>
-      <thead>
-        <tr>
-          <th>Var</th>
-          <th>Aug-25</th>
-          <th>Sep-25</th>
-          <th>Oct-25</th>
-          <th>Nov-25</th>
-          <th>Dec-25</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>ALL</td>
-          <td>3,875</td>
-          <td>3,905</td>
-          <td>4,020</td>
-          <td>3,760</td>
-          <td>4,125</td>
-        </tr>
-      </tbody>
-    </table>
-    <p class="volume-title">Volume Unit Model KS</p>
-  </div>
-
-  <div class="volume-table">
-    <table>
-      <thead>
-        <tr>
-          <th>Var</th>
-          <th>Aug-25</th>
-          <th>Sep-25</th>
-          <th>Oct-25</th>
-          <th>Nov-25</th>
-          <th>Dec-25</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>ALL</td>
-          <td>2,640</td>
-          <td>2,710</td>
-          <td>2,530</td>
-          <td>2,660</td>
-          <td>2,775</td>
-        </tr>
-      </tbody>
-    </table>
-    <p class="volume-title">Volume Unit Model SU2ID H</p>
-  </div>
-
-  <div class="volume-table">
-    <table>
-      <thead>
-        <tr>
-          <th>Var</th>
-          <th>Aug-25</th>
-          <th>Sep-25</th>
-          <th>Oct-25</th>
-          <th>Nov-25</th>
-          <th>Dec-25</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>ALL</td>
-          <td>7,790</td>
-          <td>8,015</td>
-          <td>8,410</td>
-          <td>8,250</td>
-          <td>8,575</td>
-        </tr>
-      </tbody>
-    </table>
-    <p class="volume-title">Volume Unit Model KS FL</p>
-  </div>
-
-  <div class="volume-table">
-    <table>
-      <thead>
-        <tr>
-          <th>Var</th>
-          <th>Aug-25</th>
-          <th>Sep-25</th>
-          <th>Oct-25</th>
-          <th>Nov-25</th>
-          <th>Dec-25</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>ALL</td>
-          <td>15,580</td>
-          <td>16,845</td>
-          <td>16,820</td>
-          <td>16,690</td>
-          <td>17,375</td>
-        </tr>
-      </tbody>
-    </table>
-    <p class="volume-title">Volume Unit ALL Model</p>
-  </div>
-</div>
-
-
-    <!-- Notes Section -->
-    <div class="notes-section">
-      <div class="notes-content">
-      <p><strong>Note:</strong></p>
-      <ul>
-        <li>Budget Material Sep 2025 menggunakan Material Price periode Jul - Sep 2025.</li>
-        <li>Budget Sep 2025 sudah termasuk Spare Part.</li>
-        <li>Budget Transport merupakan Budget Transport CKD Import.</li>
-        <li>Diff. Budget MDFO vs Act Aug’25 terabsorb pada qty budget Sep’25.</li>
-        <li>Qty 1st Week Sep’25 masuk ke dalam budget Aug-25.</li>
-      </ul>
-      </div>
-    </div>
-
-    <!-- Signature Section -->
-    <div class="signature-section">
-
-
-
-      <table class="signature-table">
+      <!-- Layout Main Table -->
+      <table class="report-table" id="budget-table">
         <thead>
           <tr>
-            <th>Menyetujui</th>
-            <th>Mengetahui</th>
-            <th colspan="2">Diperiksa</th>
-            <th>Dibuat</th>
+            <th style="background-color: white; border: none;" colspan="21"></th>
+            <th colspan="3" style="background-color: white; font-style: italic;">{{ formattedDate }}</th>
+          </tr>
+          <tr>
+            <th rowspan="4" style="width:10px; text-align:center;">No</th>
+            <th rowspan="4">Model</th>
+            <th rowspan="4" colspan="2">Material/CKD</th>
+            <th rowspan="4">Σ Item <br> V to V / <br>Gpart</th>
+            <!-- Bulan -->
+            <th colspan="19" style="font-size: 13px; font-weight: bold;">BUDGET MATERIAL & CKD</th>
+          </tr>
+          <tr>
+            <th colspan="6">Aug-25</th>
+            <th rowspan="3">DIFF</th>
+            <th colspan="3">Sep-25</th>
+            <th colspan="3">Oct-25</th>
+            <th colspan="3">Nov-25</th>
+            <th colspan="3">Dec-25</th>
+          </tr>
+          <tr>
+            <th colspan="3">FORECAST</th>
+            <th colspan="3">ACTUAL</th>
+            <th colspan="3">FORECAST</th>
+            <th colspan="3">FORECAST</th>
+            <th colspan="3">FORECAST</th>
+            <th colspan="3">FORECAST</th>
+          </tr>
+          <tr>
+            <!-- Sub kolom -->
+            <th class="italic">PCS</th>
+            <th class="italic">KG</th>
+            <th class="italic">AMOUNT <br>(x1000)</th>
+            <th class="italic">PCS</th>
+            <th class="italic">KG</th>
+            <th class="italic">AMOUNT <br>(x1000)</th>
+            <th class="italic">PCS</th>
+            <th class="italic">KG</th>
+            <th class="italic">AMOUNT <br>(x1000)</th>
+            <th class="italic">PCS</th>
+            <th class="italic">KG</th>
+            <th class="italic">AMOUNT <br>(x1000)</th>
+            <th class="italic">PCS</th>
+            <th class="italic">KG</th>
+            <th class="italic">AMOUNT <br>(x1000)</th>
+            <th class="italic">PCS</th>
+            <th class="italic">KG</th>
+            <th class="italic">AMOUNT <br>(x1000)</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td style="height: 60px;"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <!-- <td></td> -->
-            <td class="bold">Rudy B. Darmawan</td>
-            <td class="bold">Aditya Herliawan</td>
-            <td class="bold">Erick Maryansyah</td>
-            <td class="bold">Imam Khudori</td>
-            <td class="bold">Gema Ramadhan P.</td>
-          </tr>
-          <tr>
-            <td><span class="role">Deputy Executive Officer<br>Commercial</span></td>
-            <td><span class="role">Dept. Head<br>Marketing</span></td>
-            <td><span class="role">Asst. Dept. Head<br>Marketing</span></td>
-            <td><span class="role">Asst. Dept. Head<br>Marketing</span></td>
-            <td><span class="role">Staff<br>Marketing</span></td>
+          <template v-for="(row, index) in budget_mat" :key="row.id">
+            <!-- Jika Material biasa -->
+            <tr v-if="row.name === 'Material'">
+              <td v-if="shouldShowNo(index)" :rowspan="rowspanNo(row.nokol)" class="bold">
+                {{ row.nokol }}
+              </td>
+              <td v-if="shouldShowModel(index)" :rowspan="rowspanModel(row.nokol, row.model)" class="bold">
+                {{ row.model }}
+              </td>
+              <td colspan="2" class="bold">Material</td>
+              <!-- Σ Item (merge) -->
+              <td v-if="shouldShowTotalItem(index)" :rowspan="3">
+                {{ row.total_item }}
+              </td>
+              <td>{{ formatNumber(row.n0_pcs_forecast) }}</td>
+              <td>{{ formatNumber(row.n0_kg_forecast) }}</td>
+              <td>{{ formatNumber(row.n0_amount_forecast) }}</td>
+              <td>{{ formatNumber(row.n0_pcs_act) }}</td>
+              <td>{{ formatNumber(row.n0_kg_act) }}</td>
+              <td>{{ formatNumber(row.n0_amount_act) }}</td>
+
+              <td style="color: red;">{{ formatNumber((row.difference * 100)) }}%</td>
+
+              <td>{{ formatNumber(row.n_pcs_forecast) }}</td>
+              <td>{{ formatNumber(row.n_kg_forecast) }}</td>
+              <td>{{ formatNumber(row.n_amount_forecast) }}</td>
+              <td>{{ formatNumber(row.n1_pcs_forecast) }}</td>
+              <td>{{ formatNumber(row.n1_kg_forecast) }}</td>
+              <td>{{ formatNumber(row.n1_amount_forecast) }}</td>
+              <td>{{ formatNumber(row.n2_pcs_forecast) }}</td>
+              <td>{{ formatNumber(row.n2_kg_forecast) }}</td>
+              <td>{{ formatNumber(row.n2_amount_forecast) }}</td>
+              <td>{{ formatNumber(row.n3_pcs_forecast) }}</td>
+              <td>{{ formatNumber(row.n3_kg_forecast) }}</td>
+              <td>{{ formatNumber(row.n3_amount_forecast) }}</td>
+            </tr>
+
+            <!-- Jika CKD → buat 2 baris -->
+            <template v-else-if="row.name === 'CKD PCS'">
+              <!-- Baris CKD - PCS -->
+              <tr>
+                <td v-if="shouldShowNo(index)" :rowspan="2">
+                  {{ row.nokol }}
+                </td>
+                <td v-if="shouldShowModel(index)" :rowspan="2">
+                  {{ row.model }}
+                </td>
+                <td rowspan="2" class="bold">CKD</td>
+
+                <!-- Baris CKD PCS -->
+                <td class="bold">PCS</td>
+
+                <!-- Merge kolom CKD PCS dan Transport -->
+                <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n0_pcs_forecast') }}</td>
+
+                <td v-if="isSameCKD(row.nokol, row.model, 'n0_kg_forecast')" :rowspan="2">
+                  {{ formatNumber(row.n0_kg_forecast) }}
+                </td>
+                <td v-else>
+                  {{ formatNumber(row.n0_kg_forecast) }}
+                </td>
+                <td>
+                  {{ formatNumber(row.n0_amount_forecast) }}
+                </td>
+
+
+                <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n0_pcs_act') }}</td>
+
+                <td v-if="isSameCKD(row.nokol, row.model, 'n0_kg_act')" :rowspan="2">
+                  {{ formatNumber(row.n0_kg_act) }}
+                </td>
+                <td v-else>
+                  {{ formatNumber(row.n0_kg_act) }}
+                </td>
+                <td>
+                  {{ formatNumber(row.n0_amount_act) }}
+                </td>
+
+                <td style="color: red;">{{ formatNumber(row.difference * 100) }}%</td>
+
+
+                <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n_pcs_forecast') }}</td>
+
+                <td v-if="isSameCKD(row.nokol, row.model, 'n_kg_forecast')" :rowspan="2">
+                  {{ formatNumber(row.n_kg_forecast) }}
+                </td>
+                <td v-else>
+                  {{ formatNumber(row.n_kg_forecast) }}
+                </td>
+                <td>
+                  {{ formatNumber(row.n_amount_forecast) }}
+                </td>
+
+                <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n1_pcs_forecast') }}</td>
+
+                <td v-if="isSameCKD(row.nokol, row.model, 'n1_kg_forecast')" :rowspan="2">
+                  {{ formatNumber(row.n1_kg_forecast) }}
+                </td>
+                <td v-else>
+                  {{ formatNumber(row.n1_kg_forecast) }}
+                </td>
+                <td>
+                  {{ formatNumber(row.n1_amount_forecast) }}
+                </td>
+
+                <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n2_pcs_forecast') }}</td>
+
+                <td v-if="isSameCKD(row.nokol, row.model, 'n2_kg_forecast')" :rowspan="2">
+                  {{ formatNumber(row.n2_kg_forecast) }}
+                </td>
+                <td v-else>
+                  {{ formatNumber(row.n2_kg_forecast) }}
+                </td>
+                <td>
+                  {{ formatNumber(row.n2_amount_forecast) }}
+                </td>
+
+                <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n3_pcs_forecast') }}</td>
+
+                <td v-if="isSameCKD(row.nokol, row.model, 'n3_kg_forecast')" :rowspan="2">
+                  {{ formatNumber(row.n3_kg_forecast) }}
+                </td>
+                <td v-else>
+                  {{ formatNumber(row.n3_kg_forecast) }}
+                </td>
+                <td>
+                  {{ formatNumber(row.n3_amount_forecast) }}
+                </td>
+              </tr>
+            </template>
+            <template v-else-if="row.name === 'CKD Transport'">
+              <!-- Baris CKD - Transport -->
+              <tr>
+                <td class="bold">Transport</td>
+
+                <td v-if="!isSameCKD(row.nokol, row.model, 'n0_kg_forecast')">
+                  {{ formatNumber(row.n0_kg_forecast) }}
+                </td>
+                <td v-if="!isSameCKD(row.nokol, row.model, 'n0_amount_forecast')">
+                  {{ formatNumber(row.n0_amount_forecast) }}
+                </td>
+
+                <td v-if="!isSameCKD(row.nokol, row.model, 'n0_kg_act')">
+                  {{ formatNumber(row.n0_kg_act) }}
+                </td>
+
+                <td v-if="!isSameCKD(row.nokol, row.model, 'n0_amount_act')">
+                  {{ formatNumber(row.n0_amount_act) }}
+                </td>
+
+                <td style="color: red">{{ row.difference * 100 }}%</td>
+
+                <td v-if="!isSameCKD(row.nokol, row.model, 'n_kg_forecast')">
+                  {{ formatNumber(row.n_kg_forecast) }}
+                </td>
+                <td v-if="!isSameCKD(row.nokol, row.model, 'n_amount_forecast')">
+                  {{ formatNumber(row.n_amount_forecast) }}
+                </td>
+
+                <td v-if="!isSameCKD(row.nokol, row.model, 'n1_kg_forecast')">
+                  {{ formatNumber(row.n1_kg_forecast) }}
+                </td>
+                <td v-if="!isSameCKD(row.nokol, row.model, 'n1_amount_forecast')">
+                  {{ formatNumber(row.n1_amount_forecast) }}
+                </td>
+
+                <td v-if="!isSameCKD(row.nokol, row.model, 'n2_kg_forecast')">
+                  {{ formatNumber(row.n2_kg_forecast) }}
+                </td>
+                <td v-if="!isSameCKD(row.nokol, row.model, 'n2_amount_forecast')">
+                  {{ formatNumber(row.n2_amount_forecast) }}
+                </td>
+
+                <td v-if="!isSameCKD(row.nokol, row.model, 'n3_kg_forecast')">
+                  {{ formatNumber(row.n3_kg_forecast) }}
+                </td>
+                <td v-if="!isSameCKD(row.nokol, row.model, 'n3_amount_forecast')">
+                  {{ formatNumber(row.n3_amount_forecast) }}
+                </td>
+
+              </tr>
+            </template>
+          </template>
+          <tr class="total">
+            <td colspan="4">Total</td>
+            <td>{{ totalColumns.total_item }}</td>
+            <td>{{ formatNumber(totalColumns.n0_pcs_forecast) }}</td>
+            <td>{{ formatNumber(totalColumns.n0_kg_forecast) }}</td>
+            <td>{{ formatNumber(totalColumns.n0_amount_forecast) }}</td>
+            <td>{{ formatNumber(totalColumns.n0_pcs_act) }}</td>
+            <td>{{ formatNumber(totalColumns.n0_kg_act) }}</td>
+            <td>{{ formatNumber(totalColumns.n0_amount_act) }}</td>
+            <td style="color: red; font-weight: bold;">{{ totalDiff.toFixed(0) }}%</td>
+            <td>{{ formatNumber(totalColumns.n_pcs_forecast) }}</td>
+            <td>{{ formatNumber(totalColumns.n_kg_forecast) }}</td>
+            <td>{{ formatNumber(totalColumns.n_amount_forecast) }}</td>
+            <td>{{ formatNumber(totalColumns.n1_pcs_forecast) }}</td>
+            <td>{{ formatNumber(totalColumns.n1_kg_forecast) }}</td>
+            <td>{{ formatNumber(totalColumns.n1_amount_forecast) }}</td>
+            <td>{{ formatNumber(totalColumns.n2_pcs_forecast) }}</td>
+            <td>{{ formatNumber(totalColumns.n2_kg_forecast) }}</td>
+            <td>{{ formatNumber(totalColumns.n2_amount_forecast) }}</td>
+            <td>{{ formatNumber(totalColumns.n3_pcs_forecast) }}</td>
+            <td>{{ formatNumber(totalColumns.n3_kg_forecast) }}</td>
+            <td>{{ formatNumber(totalColumns.n3_amount_forecast) }}</td>
           </tr>
         </tbody>
       </table>
-    </div>
 
+      <div class="bottom-section">
+        <!-- Volume Tables Section -->
+        <div class="volume-section">
+          <div class="volume-table">
+            <table>
+              <!-- <p class="volume-title">Volume Unit Model SU2ID D</p> -->
+              <thead>
+                <tr>
+                  <th class="volume-title" colspan="7">Volume Unit Model SU2ID D</th>
+                </tr>
+                <tr>
+                  <th rowspan="2">Var</th>
+                  <th colspan="2">Aug-25</th>
+                  <th rowspan="2">Sep-25</th>
+                  <th rowspan="2">Oct-25</th>
+                  <th rowspan="2">Nov-25</th>
+                  <th rowspan="2">Dec-25</th>
+                </tr>
+                <tr>
+                  <th>FC</th>
+                  <th>Act</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>ALL</td>
+                  <td>127</td>
+                  <td>-</td>
+                  <td>127</td>
+                  <td>129</td>
+                  <td>139</td>
+                  <td>121</td>
+                </tr>
+                <tr>
+                  <td>RHD</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>1</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td>LHD</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>2</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="volume-table">
+            <table>
+              <thead>
+                <tr>
+                  <th class="volume-title" colspan="7">Volume Unit Model KS</th>
+                </tr>
+                <tr>
+                  <th rowspan="2">Var</th>
+                  <th colspan="2">Aug-25</th>
+                  <th rowspan="2">Sep-25</th>
+                  <th rowspan="2">Oct-25</th>
+                  <th rowspan="2">Nov-25</th>
+                  <th rowspan="2">Dec-25</th>
+                </tr>
+                <tr>
+                  <th>FC</th>
+                  <th>Act</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>ALL</td>
+                  <td>1319</td>
+                  <td>1424</td>
+                  <td>130</td>
+                  <td>308</td>
+                  <td>240</td>
+                  <td>197</td>
+                </tr>
+                <tr>
+                  <td>RHD</td>
+                  <td>713</td>
+                  <td>664</td>
+                  <td>112</td>
+                  <td>295</td>
+                  <td>226</td>
+                  <td>185</td>
+                </tr>
+                <tr>
+                  <td>LHD</td>
+                  <td>606</td>
+                  <td>760</td>
+                  <td>18</td>
+                  <td>13</td>
+                  <td>14</td>
+                  <td>12</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="volume-table">
+            <table>
+              <thead>
+                <tr>
+                  <th class="volume-title" colspan="7">Volume Unit Model SU2ID FL</th>
+                </tr>
+                <tr>
+                  <th rowspan="2">Var</th>
+                  <th colspan="2">Aug-25</th>
+                  <th rowspan="2">Sep-25</th>
+                  <th rowspan="2">Oct-25</th>
+                  <th rowspan="2">Nov-25</th>
+                  <th rowspan="2">Dec-25</th>
+                </tr>
+                <tr>
+                  <th>FC</th>
+                  <th>Act</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>ALL</td>
+                  <td>6720</td>
+                  <td>6342</td>
+                  <td>6047</td>
+                  <td>5262</td>
+                  <td>5010</td>
+                  <td>3148</td>
+                </tr>
+                <tr>
+                  <td>RHD</td>
+                  <td>694</td>
+                  <td>608</td>
+                  <td>342</td>
+                  <td>277</td>
+                  <td>222</td>
+                  <td>185</td>
+                </tr>
+                <tr>
+                  <td>LHD</td>
+                  <td>6019</td>
+                  <td>5784</td>
+                  <td>5700</td>
+                  <td>4985</td>
+                  <td>4788</td>
+                  <td>2097</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="volume-table">
+            <table>
+              <thead>
+                <tr>
+                  <th class="volume-title" colspan="7">Volume Unit Model KS FL</th>
+                </tr>
+                <tr>
+                  <th rowspan="2">Var</th>
+                  <th colspan="2">Aug-25</th>
+                  <th rowspan="2">Sep-25</th>
+                  <th rowspan="2">Oct-25</th>
+                  <th rowspan="2">Nov-25</th>
+                  <th rowspan="2">Dec-25</th>
+                </tr>
+                <tr>
+                  <th>FC</th>
+                  <th>Act</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>ALL</td>
+                  <td>490</td>
+                  <td>490</td>
+                  <td>1298</td>
+                  <td>1346</td>
+                  <td>1334</td>
+                  <td>1660</td>
+                </tr>
+                <tr>
+                  <td>RHD</td>
+                  <td>490</td>
+                  <td>490</td>
+                  <td>568</td>
+                  <td>426</td>
+                  <td>333</td>
+                  <td>1258</td>
+                </tr>
+                <tr>
+                  <td>LHD</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>730</td>
+                  <td>920</td>
+                  <td>1001</td>
+                  <td>402</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="volume-table">
+            <table>
+              <thead>
+                <tr>
+                  <th class="volume-title" colspan="7">Volume Unit Model KS FL</th>
+                </tr>
+                <tr>
+                  <th rowspan="2">Var</th>
+                  <th colspan="2">Aug-25</th>
+                  <th rowspan="2">Sep-25</th>
+                  <th rowspan="2">Oct-25</th>
+                  <th rowspan="2">Nov-25</th>
+                  <th rowspan="2">Dec-25</th>
+                </tr>
+                <tr>
+                  <th>FC</th>
+                  <th>Act</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>ALL</td>
+                  <td>490</td>
+                  <td>490</td>
+                  <td>1298</td>
+                  <td>1346</td>
+                  <td>1334</td>
+                  <td>1660</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="right-side">
+          <!-- Notes Section -->
+          <div class="notes-section">
+            <div class="notes-content">
+              <p><strong>Note:</strong></p>
+              <ul>
+                <li>Budget Material Sep 2025 menggunakan Material Price periode Jul - Sep 2025.</li>
+                <li>Budget Sep 2025 sudah termasuk Spare Part.</li>
+                <li>Budget Transport merupakan Budget Transport CKD Import.</li>
+                <li>Diff. Budget MDFO vs Act Aug’25 terabsorb pada qty budget Sep’25.</li>
+                <li>Qty 1st Week Sep’25 masuk ke dalam budget Aug-25.</li>
+              </ul>
+            </div>
+          </div>
+
+
+          <!-- Signature Section -->
+          <div class="signature-section">
+
+
+
+            <table class="signature-table">
+              <thead>
+                <tr>
+                  <th>Menyetujui</th>
+                  <th>Mengetahui</th>
+                  <th colspan="2">Diperiksa</th>
+                  <th>Dibuat</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="height: 60px;"></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <!-- <td></td> -->
+                  <td class="bold">Rudy B. Darmawan</td>
+                  <td class="bold">Aditya Herliawan</td>
+                  <td class="bold">Erick Maryansyah</td>
+                  <td class="bold">Imam Khudori</td>
+                  <td class="bold">Gema Ramadhan P.</td>
+                </tr>
+                <tr>
+                  <td><span class="role">Deputy Executive Officer<br>Commercial</span></td>
+                  <td><span class="role">Dept. Head<br>Marketing</span></td>
+                  <td><span class="role">Asst. Dept. Head<br>Marketing</span></td>
+                  <td><span class="role">Asst. Dept. Head<br>Marketing</span></td>
+                  <td><span class="role">Staff<br>Marketing</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="print-button">
+    <button @click="printA4">
+      <img src="../assets/printer.png" alt="Print" class="icon" />
+      Print
+    </button>
   </div>
 </template>
 
@@ -560,6 +676,10 @@ export default {
 
       // langsung download
       XLSX.writeFile(wb, "budget.xlsx");
+    },
+
+    printA4() {
+      window.print();
     }
   },
 
@@ -602,7 +722,7 @@ export default {
         }
       });
 
-      for (let key in totals) {
+      for (const key in totals) {
         totals[key] = Math.round(totals[key]); // bisa ganti ke Math.floor / Math.ceil sesuai kebutuhan
       }
       return totals;
