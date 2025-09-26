@@ -146,7 +146,6 @@
                   {{ formatNumber(row.n0_amount_forecast) }}
                 </td>
 
-
                 <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n0_pcs_act') }}</td>
 
                 <td v-if="isSameCKD(row.nokol, row.model, 'n0_kg_act')" :rowspan="2">
@@ -160,7 +159,6 @@
                 </td>
 
                 <td style="color: red;">{{ formatNumber(row.difference * 100) }}%</td>
-
 
                 <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n_pcs_forecast') }}</td>
 
