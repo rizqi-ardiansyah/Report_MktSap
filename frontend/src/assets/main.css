@@ -9,6 +9,38 @@ body {
   color: #000;
 }
 
+.filter-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f8f9fa;
+  padding: 12px 16px;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.filter-bar label {
+  font-weight: 600;
+  color: #333;
+}
+
+.filter-bar input[type="month"] {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.filter-bar input[type="month"]:focus {
+  border-color: #007bff; /* blue focus */
+  outline: none;
+  box-shadow: 0 0 4px rgba(0,123,255,0.4);
+}
+
 .p-4 {
   text-align: center;
 }
@@ -359,5 +391,9 @@ td {
 
   .report-container {
     border: none;
+  }
+
+  .filter-bar{
+    display: none;
   }
 }

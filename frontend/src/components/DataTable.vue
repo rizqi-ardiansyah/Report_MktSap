@@ -1,4 +1,10 @@
 <template>
+  <!-- Filter control outside A4 page -->
+  <div class="filter-bar">
+      <label for="month">Choose Start Month:</label>
+      <input type="month" id="month" v-model="selectedMonth" @change="applyFilter" />
+    </div>
+
   <div id="printArea" class="a4-page">
     <!-- For Make Border -->
     <div class="report-container">
@@ -11,19 +17,19 @@
         <div class="header-info">
           <div class="row">
             <span class="label bold">TITLE</span>
-            <span class="value bold">: BUDGET PEMBELIAN MATERIAL & CKD SEPTEMBER 2025</span>
+            <span class="value bold" contenteditable="true">: BUDGET PEMBELIAN MATERIAL & CKD SEPTEMBER 2025</span>
           </div>
           <div class="row">
             <span class="label bold">PROJECT</span>
-            <span class="value bold">: SU2ID & KS</span>
+            <span class="value bold" contenteditable="true">: SU2ID & KS</span>
           </div>
           <div class="row">
             <span class="label bold">CUSTOMER</span>
-            <span class="value bold">: PT HMMI</span>
+            <span class="value bold" contenteditable="true">: PT HMMI</span>
           </div>
         </div>
         <div class="rev">
-          <p style="font-weight: bold;">REV. 00</p>
+          <p style="font-weight: bold;" contenteditable="true">REV. 00</p>
         </div>
       </div>
 
@@ -534,13 +540,13 @@
           <!-- Notes Section -->
           <div class="notes-section">
             <div class="notes-content">
-              <p><strong>Note:</strong></p>
+              <p ><strong>Note:</strong></p>
               <ul>
-                <li>Budget Material Sep 2025 menggunakan Material Price periode Jul - Sep 2025.</li>
-                <li>Budget Sep 2025 sudah termasuk Spare Part.</li>
-                <li>Budget Transport merupakan Budget Transport CKD Import.</li>
-                <li>Diff. Budget MDFO vs Act Aug’25 terabsorb pada qty budget Sep’25.</li>
-                <li>Qty 1st Week Sep’25 masuk ke dalam budget Aug-25.</li>
+                <li contenteditable="true">Budget Material Sep 2025 menggunakan Material Price periode Jul - Sep 2025.</li>
+                <li contenteditable="true">Budget Sep 2025 sudah termasuk Spare Part.</li>
+                <li contenteditable="true">Budget Transport merupakan Budget Transport CKD Import.</li>
+                <li contenteditable="true">Diff. Budget MDFO vs Act Aug’25 terabsorb pada qty budget Sep’25.</li>
+                <li contenteditable="true">Qty 1st Week Sep’25 masuk ke dalam budget Aug-25.</li>
               </ul>
             </div>
           </div>
@@ -570,18 +576,18 @@
                 </tr>
                 <tr>
                   <!-- <td></td> -->
-                  <td class="bold">Rudy B. Darmawan</td>
-                  <td class="bold">Aditya Herliawan</td>
-                  <td class="bold">Erick Maryansyah</td>
-                  <td class="bold">Imam Khudori</td>
-                  <td class="bold">Gema Ramadhan P.</td>
+                  <td class="bold" contenteditable="true">Rudy B. Darmawan</td>
+                  <td class="bold" contenteditable="true">Aditya Herliawan</td>
+                  <td class="bold" contenteditable="true">Erick Maryansyah</td>
+                  <td class="bold" contenteditable="true">Imam Khudori</td>
+                  <td class="bold" contenteditable="true">Gema Ramadhan P.</td>
                 </tr>
                 <tr>
-                  <td><span class="role">Deputy Executive Officer<br>Commercial</span></td>
-                  <td><span class="role">Dept. Head<br>Marketing</span></td>
-                  <td><span class="role">Asst. Dept. Head<br>Marketing</span></td>
-                  <td><span class="role">Asst. Dept. Head<br>Marketing</span></td>
-                  <td><span class="role">Staff<br>Marketing</span></td>
+                  <td><span class="role" contenteditable="true">Deputy Executive Officer<br>Commercial</span></td>
+                  <td><span class="role" contenteditable="true">Dept. Head<br>Marketing</span></td>
+                  <td><span class="role" contenteditable="true">Asst. Dept. Head<br>Marketing</span></td>
+                  <td><span class="role" contenteditable="true">Asst. Dept. Head<br>Marketing</span></td>
+                  <td><span class="role" contenteditable="true">Staff<br>Marketing</span></td>
                 </tr>
               </tbody>
             </table>
