@@ -3,7 +3,7 @@
   <div class="filter-bar">
       <label for="month">Choose Start Month:</label>
       <input type="month" id="month" v-model="selectedMonth" @change="applyFilter" />
-    </div>
+  </div>
 
   <div id="printArea" class="a4-page">
     <!-- For Make Border -->

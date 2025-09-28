@@ -14,6 +14,7 @@ body {
   top: 0;
   z-index: 1000;
   display: flex;
+  flex-wrap: wrap; /* allow wrapping on smaller screens */
   align-items: center;
   gap: 10px;
   background: #f8f9fa;
@@ -185,6 +186,10 @@ td {
   /* wrap text if too long */
 }
 
+.report-table .thAct{
+  font-style: italic;
+}
+
 .report-table .total {
   background-color: #99ccff;
 }
@@ -254,6 +259,17 @@ td {
   flex-direction: column;
   /* stack notes above signature */
   align-items: flex-end;
+  /* align everything to the right */
+  flex: 1;
+}
+
+.left-side {
+  display: flex;
+  flex-direction: column;
+  margin-top: 25px;
+  margin-left: 3px;
+  /* stack notes above signature */
+  align-items: flex-start;
   /* align everything to the right */
   flex: 1;
 }
@@ -348,6 +364,16 @@ td {
   height: 18px;
 }
 
+@media (max-width: 600px) {
+  .filter-bar {
+    flex-direction: column; /* stack vertically on small screens */
+    align-items: stretch;
+  }
+  
+  .filter-bar label {
+    margin-bottom: 5px;
+  }
+}
 /* Print version */
 /* A4 Landscape setup */
 @media print {

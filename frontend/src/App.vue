@@ -1,10 +1,6 @@
-<template>
-  <!-- <div id="app"> -->
-    <!-- <h2>Download Data SAP</h2>
-    <DownloadButton /> -->
+<!-- <template>
     <DataTable />
-  <!-- </div> -->
-</template>
+</template> -->
 
 <!-- <script>
 import DownloadButton from './views/DownloadButton.vue'
@@ -15,14 +11,17 @@ export default {
   },
 }
 </script> -->
+<template>
+  <router-view />
+</template>
 
 <script>
-import DataTable from "./components/DataTable.vue";
+import budgetMatHmmi from "./components/budgetMatHmmi.vue";
 
 export default {
   name: "App",
-  components: {
-    DataTable
-  }
+  // components: {
+  //   DataTable
+  // }
 };
 </script>
