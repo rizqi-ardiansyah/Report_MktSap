@@ -116,9 +116,9 @@
               <td>{{ percentageMaterial(row, "n0_amount_act", "n0_amountSales") }}</td>
 
               <td>{{ formatNumber(row.n_amount_forecast) }}</td>
+              <td rowspan="3">{{ formatNumber(row.n_amountSales) }}</td>
+              <td>{{ percentageMaterial(row, "n_amount_forecast", "n_amountSales") }}</td>
 
-              <td>{{ formatNumber(row.n0_pcs_act) }}</td>
-              <td>{{ formatNumber(row.n0_kg_act) }}</td>
               <td>{{ formatNumber(row.n0_amount_act) }}</td>
 
               <td style="color: red;">{{ formatNumber((row.difference * 100)) }}%</td>
@@ -150,9 +150,10 @@
 
                 <!-- Merge kolom CKD PCS dan Transport -->
                 <td :rowspan="2">{{ formatNumber(sumCKD(row.nokol, row.model, 'n0_amount_act')) }}</td>
-
-
                 <td :rowspan="2">{{ percentageCKD(row.nokol, row.model, 'n0_amount_act', 'n0_amountSales') }}</td>
+
+                <td :rowspan="2">{{ formatNumber(sumCKD(row.nokol, row.model, 'n_amount_forecast')) }}</td>
+                <td :rowspan="2">{{ percentageCKD(row.nokol, row.model, 'n_amount_forecast', 'n_amountSales') }}</td>
 
                 <td v-if="isSameCKD(row.nokol, row.model, 'n0_kg_act')" :rowspan="2">
                   {{ formatNumber(row.n0_kg_act) }}
@@ -227,12 +228,12 @@
           <tr class="total">
             <td colspan="4">Total</td>
             <td>{{ totalColumns.total_item }}</td>
-            <td>{{ sumAllAmountMats("n0_amount_act") }}</td>
-            <td>{{ sumAllAmountSales("n0_amountSales") }}</td>
-            <td>{{ sumAllMaterialPercent("n0_amount_act") }}</td>
-            <td>{{ formatNumber(totalColumns.n0_pcs_act) }}</td>
-            <td>{{ formatNumber(totalColumns.n0_kg_act) }}</td>
-            <td>{{ formatNumber(totalColumns.n0_amount_act) }}</td>
+            <td>{{ formatNumber(sumAllAmountMats("n0_amount_act")) }}</td>
+            <td>{{ formatNumber(sumAllAmountSales("n0_amountSales")) }}</td>
+            <td>{{ totalPercentSales("n0_amount_act","n0_amountSales")}}</td>
+            <td>{{ formatNumber(sumAllAmountMats("n_amount_forecast")) }}</td>
+            <td>{{ formatNumber(sumAllAmountSales("n_amountSales")) }}</td>
+            <td>{{ totalPercentSales("n_amount_forecast","n_amountSales")}}</td>
             <td style="color: red; font-weight: bold;">{{ totalDiff.toFixed(0) }}%</td>
             <td>{{ formatNumber(totalColumns.n_pcs_forecast) }}</td>
             <td>{{ formatNumber(totalColumns.n_kg_forecast) }}</td>
@@ -365,7 +366,7 @@ export default {
         return sum + (parseFloat(r[field]) || 0);
       }, 0);
 
-      return this.formatNumber(total);
+      return total;
     },
 
     sumAllAmountSales(field) {
@@ -377,7 +378,7 @@ export default {
         return sum + (parseFloat(r[field]) || 0);
       }, 0);
 
-      return this.formatNumber(total);
+      return total;
     },
 
     sumAllMaterialPercent(field) {
@@ -389,7 +390,7 @@ export default {
         return sum + (parseFloat(r[field]) || 0);
       }, 0);
 
-      return this.formatNumber(total);
+      return total;
     },
 
 
@@ -404,6 +405,15 @@ export default {
       const row = this.budget_mat.find(r => r.nokol === no && r.model === model);
       const total = parseFloat(row?.[field2]) || 0;
       return ((this.sumCKD(no, model, field) / total) * 100).toFixed(0) + "%";
+    },
+
+    
+    totalPercentSales(field1, field2){
+      const totalMats = this.sumAllAmountMats(field1);
+      const totalSales = this.sumAllAmountSales(field2);
+
+      const totalPercent = ((totalMats/totalSales)*100).toFixed(0) + "%";
+      return totalPercent;
     },
 
 
