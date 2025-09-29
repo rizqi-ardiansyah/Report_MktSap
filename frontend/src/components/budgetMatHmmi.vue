@@ -3,6 +3,20 @@
   <div class="filter-bar">
     <label for="month">Choose Start Month:</label>
     <input type="month" id="month" v-model="selectedMonth" @change="applyFilter" />
+
+    <label for="reportType">Report Type:</label>
+    <select id="reportType" v-model="selectedReportType" @change="applyFilter">
+      <option value="Original">Original</option>
+      <option value="">Balancing</option>
+    </select>
+
+    <label for="version">Version:</label>
+    <select id="version" v-model="selectedVersion" @change="applyFilter">
+      <option value="00">00</option>
+      <option value="01">01</option>
+      <option value="02">02</option>
+      <option value="03">03</option>
+    </select>
   </div>
 
   <div id="printArea" class="a4-page">
@@ -28,8 +42,8 @@
             <span class="value bold" contenteditable="true">: PT HMMI</span>
           </div>
         </div>
-        <div class="rev">
-          <p style="font-weight: bold;" contenteditable="true">REV. 00</p>
+        <div class="rev" id="rev">
+          <p style="font-weight: bold;" contenteditable="true">{{ selectedReportType }} REV. {{ selectedVersion }}</p>
         </div>
       </div>
 
@@ -582,6 +596,7 @@
   </div>
 </template>
 
+
 <script>
 import axios from "axios";
 import * as XLSX from "xlsx";
@@ -590,6 +605,9 @@ export default {
   data() {
     return {
       budget_mat: [],
+      selectedMonth: "",         // month filter
+      selectedReportType: "", // default
+      selectedVersion: "00",     // default
     };
   },
   mounted() {
@@ -599,6 +617,18 @@ export default {
   },
 
   methods: {
+    applyFilter() {
+      axios.get("http://localhost:5000/api/data", {
+        params: {
+          month: this.selectedMonth,
+          reportType: this.selectedReportType,
+          version: this.selectedVersion,
+        }
+      })
+        .then(res => {
+          this.budget_mat = res.data;
+        });
+    },
     // hitung rowspan untuk No
     rowspanNo(no) {
       return this.budget_mat.filter(r => r.nokol === no).length;

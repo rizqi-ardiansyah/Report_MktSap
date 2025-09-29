@@ -9,6 +9,7 @@ body {
   color: #000;
 }
 
+/* Display for choose data */
 .filter-bar {
   position: sticky;
   top: 0;
@@ -28,7 +29,8 @@ body {
   color: #333;
 }
 
-.filter-bar input[type="month"] {
+.filter-bar input[type="month"],
+.filter-bar select {
   padding: 6px 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -46,6 +48,7 @@ body {
   text-align: center;
 }
 
+/* Display for table */
 table {
   border-collapse: collapse;
   width: 100%;
@@ -86,6 +89,7 @@ td {
   box-sizing: border-box;
 }
 
+/* Display for table border */
 .report-container {
   border: 1px solid #000;
   /* outer border */
@@ -108,6 +112,28 @@ td {
   padding-bottom: 0px;
   margin-bottom: 11px;
   align-items: flex-start;
+}
+
+.row {
+  display: table-row;
+  font-size: 13px;
+}
+
+.label {
+  display: table-cell;
+  font-weight: bold;
+  padding-right: 8px;
+  /* space before colon */
+  white-space: nowrap;
+}
+
+.colon {
+  display: table-cell;
+  padding-right: 10px;
+}
+
+.value {
+  display: table-cell;
 }
 
 /* Style for image */
@@ -143,28 +169,6 @@ td {
   align-self: flex-end;
 }
 
-.row {
-  display: table-row;
-  font-size: 13px;
-}
-
-.label {
-  display: table-cell;
-  font-weight: bold;
-  padding-right: 8px;
-  /* space before colon */
-  white-space: nowrap;
-}
-
-.colon {
-  display: table-cell;
-  padding-right: 10px;
-}
-
-.value {
-  display: table-cell;
-}
-
 /* Style for main table */
 .report-table {
   width: 100%;
@@ -198,6 +202,7 @@ td {
   font-weight: bold;
 }
 
+/* Display for bottom section */
 .bottom-section {
   display: flex;
   justify-content: space-between;
@@ -274,6 +279,7 @@ td {
   flex: 1;
 }
 
+/* Display for notes section */
 .notes-section {
   font-size: 12px;
   margin-top: 0px;
@@ -299,6 +305,7 @@ td {
   line-height: 1.5;
 }
 
+/* Display for signature */
 .signature-section {
   width: 100%;
   display: flex;
@@ -369,11 +376,12 @@ td {
     flex-direction: column; /* stack vertically on small screens */
     align-items: stretch;
   }
-  
+
   .filter-bar label {
     margin-bottom: 5px;
   }
 }
+
 /* Print version */
 /* A4 Landscape setup */
 @media print {
