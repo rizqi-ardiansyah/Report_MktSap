@@ -61,7 +61,7 @@
           <tr>
             <th rowspan="4" style="width:10px; text-align:center;">No</th>
             <th rowspan="4">Model</th>
-            <th rowspan="4" colspan="2">Material/CKD</th>
+            <th rowspan="4" colspan="2">Material / CKD</th>
             <th rowspan="4">Σ Item <br> V to V / <br>Gpart</th>
             <!-- Bulan -->
             <th colspan="15" style="font-size: 13px; font-weight: bold;">BUDGET MATERIAL & CKD VS SO</th>
@@ -119,18 +119,17 @@
               <td rowspan="3">{{ formatNumber(row.n_amountSales) }}</td>
               <td>{{ percentageMaterial(row, "n_amount_forecast", "n_amountSales") }}</td>
 
-              <td>{{ formatNumber(row.n0_amount_act) }}</td>
-
-              <td style="color: red;">{{ formatNumber((row.difference * 100)) }}%</td>
-
-              <td>{{ formatNumber(row.n_pcs_forecast) }}</td>
-              <td>{{ formatNumber(row.n_kg_forecast) }}</td>
-              <td>{{ formatNumber(row.n_amount_forecast) }}</td>
-              <td>{{ formatNumber(row.n1_pcs_forecast) }}</td>
-              <td>{{ formatNumber(row.n1_kg_forecast) }}</td>
               <td>{{ formatNumber(row.n1_amount_forecast) }}</td>
-              <td>{{ formatNumber(row.n2_pcs_forecast) }}</td>
-              <td>{{ formatNumber(row.n2_kg_forecast) }}</td>
+              <td rowspan="3">{{ formatNumber(row.n1_amountSales) }}</td>
+              <td>{{ percentageMaterial(row, "n1_amount_forecast", "n1_amountSales") }}</td>
+
+              <td>{{ formatNumber(row.n2_amount_forecast) }}</td>
+              <td rowspan="3">{{ formatNumber(row.n2_amountSales) }}</td>
+              <td>{{ percentageMaterial(row, "n2_amount_forecast", "n2_amountSales") }}</td>
+
+              <td>{{ formatNumber(row.n3_amount_forecast) }}</td>
+              <td rowspan="3">{{ formatNumber(row.n3_amountSales) }}</td>
+              <td>{{ percentageMaterial(row, "n3_amount_forecast", "n3_amountSales") }}</td>
             </tr>
 
             <!-- Jika CKD → buat 2 baris -->
@@ -155,73 +154,20 @@
                 <td :rowspan="2">{{ formatNumber(sumCKD(row.nokol, row.model, 'n_amount_forecast')) }}</td>
                 <td :rowspan="2">{{ percentageCKD(row.nokol, row.model, 'n_amount_forecast', 'n_amountSales') }}</td>
 
-                <td v-if="isSameCKD(row.nokol, row.model, 'n0_kg_act')" :rowspan="2">
-                  {{ formatNumber(row.n0_kg_act) }}
-                </td>
-                <td v-else>
-                  {{ formatNumber(row.n0_kg_act) }}
-                </td>
-                <td>
-                  {{ formatNumber(row.n0_amount_act) }}
-                </td>
+                <td :rowspan="2">{{ formatNumber(sumCKD(row.nokol, row.model, 'n1_amount_forecast')) }}</td>
+                <td :rowspan="2">{{ percentageCKD(row.nokol, row.model, 'n1_amount_forecast', 'n1_amountSales') }}</td>
 
-                <td style="color: red;">{{ formatNumber(row.difference * 100) }}%</td>
+                <td :rowspan="2">{{ formatNumber(sumCKD(row.nokol, row.model, 'n2_amount_forecast')) }}</td>
+                <td :rowspan="2">{{ percentageCKD(row.nokol, row.model, 'n2_amount_forecast', 'n2_amountSales') }}</td>
 
-                <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n_pcs_forecast') }}</td>
-
-                <td v-if="isSameCKD(row.nokol, row.model, 'n_kg_forecast')" :rowspan="2">
-                  {{ formatNumber(row.n_kg_forecast) }}
-                </td>
-                <td v-else>
-                  {{ formatNumber(row.n_kg_forecast) }}
-                </td>
-                <td>
-                  {{ formatNumber(row.n_amount_forecast) }}
-                </td>
-
-                <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n1_pcs_forecast') }}</td>
-
-                <td v-if="isSameCKD(row.nokol, row.model, 'n1_kg_forecast')" :rowspan="2">
-                  {{ formatNumber(row.n1_kg_forecast) }}
-                </td>
-                <td v-else>
-                  {{ formatNumber(row.n1_kg_forecast) }}
-                </td>
-                <td>
-                  {{ formatNumber(row.n1_amount_forecast) }}
-                </td>
-
-                <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n2_pcs_forecast') }}</td>
-
-                <td v-if="isSameCKD(row.nokol, row.model, 'n2_kg_forecast')" :rowspan="2">
-                  {{ formatNumber(row.n2_kg_forecast) }}
-                </td>
-                <td v-else>
-                  {{ formatNumber(row.n2_kg_forecast) }}
-                </td>
+                <td :rowspan="2">{{ formatNumber(sumCKD(row.nokol, row.model, 'n3_amount_forecast')) }}</td>
+                <td :rowspan="2">{{ percentageCKD(row.nokol, row.model, 'n3_amount_forecast', 'n3_amountSales') }}</td>
               </tr>
             </template>
             <template v-else-if="row.name === 'CKD Transport'">
               <!-- Baris CKD - Transport -->
               <tr>
                 <td class="bold">Transport</td>
-
-                <td v-if="!isSameCKD(row.nokol, row.model, 'n0_amount_act')">
-                  {{ formatNumber(row.n0_amount_act) }}
-                </td>
-
-                <td style="color: red">{{ row.difference * 100 }}%</td>
-
-                <td v-if="!isSameCKD(row.nokol, row.model, 'n_kg_forecast')">
-                  {{ formatNumber(row.n_kg_forecast) }}
-                </td>
-                <td v-if="!isSameCKD(row.nokol, row.model, 'n_amount_forecast')">
-                  {{ formatNumber(row.n_amount_forecast) }}
-                </td>
-
-                <td v-if="!isSameCKD(row.nokol, row.model, 'n1_kg_forecast')">
-                  {{ formatNumber(row.n1_kg_forecast) }}
-                </td>
               </tr>
             </template>
           </template>
@@ -230,20 +176,23 @@
             <td>{{ totalColumns.total_item }}</td>
             <td>{{ formatNumber(sumAllAmountMats("n0_amount_act")) }}</td>
             <td>{{ formatNumber(sumAllAmountSales("n0_amountSales")) }}</td>
-            <td>{{ totalPercentSales("n0_amount_act","n0_amountSales")}}</td>
+            <td>{{ totalPercentSales("n0_amount_act", "n0_amountSales") }}</td>
+
             <td>{{ formatNumber(sumAllAmountMats("n_amount_forecast")) }}</td>
             <td>{{ formatNumber(sumAllAmountSales("n_amountSales")) }}</td>
-            <td>{{ totalPercentSales("n_amount_forecast","n_amountSales")}}</td>
-            <td style="color: red; font-weight: bold;">{{ totalDiff.toFixed(0) }}%</td>
-            <td>{{ formatNumber(totalColumns.n_pcs_forecast) }}</td>
-            <td>{{ formatNumber(totalColumns.n_kg_forecast) }}</td>
-            <td>{{ formatNumber(totalColumns.n_amount_forecast) }}</td>
-            <td>{{ formatNumber(totalColumns.n1_pcs_forecast) }}</td>
-            <td>{{ formatNumber(totalColumns.n1_kg_forecast) }}</td>
-            <td>{{ formatNumber(totalColumns.n1_amount_forecast) }}</td>
-            <td>{{ formatNumber(totalColumns.n2_pcs_forecast) }}</td>
-            <td>{{ formatNumber(totalColumns.n2_kg_forecast) }}</td>
+            <td>{{ totalPercentSales("n_amount_forecast", "n_amountSales") }}</td>
 
+            <td>{{ formatNumber(sumAllAmountMats("n1_amount_forecast")) }}</td>
+            <td>{{ formatNumber(sumAllAmountSales("n1_amountSales")) }}</td>
+            <td>{{ totalPercentSales("n1_amount_forecast", "n1_amountSales") }}</td>
+
+            <td>{{ formatNumber(sumAllAmountMats("n2_amount_forecast")) }}</td>
+            <td>{{ formatNumber(sumAllAmountSales("n2_amountSales")) }}</td>
+            <td>{{ totalPercentSales("n2_amount_forecast", "n2_amountSales") }}</td>
+
+            <td>{{ formatNumber(sumAllAmountMats("n3_amount_forecast")) }}</td>
+            <td>{{ formatNumber(sumAllAmountSales("n3_amountSales")) }}</td>
+            <td>{{ totalPercentSales("n3_amount_forecast", "n3_amountSales") }}</td>
           </tr>
         </tbody>
       </table>
@@ -254,7 +203,8 @@
           <div class="notes-content">
             <p><strong>Note:</strong></p>
             <ul>
-              <li contenteditable="true">Budget Material Sep 2025 menggunakan Material Price periode Jul - Sep 2025.</li>
+              <li contenteditable="true">Budget Material Sep 2025 menggunakan Material Price periode Jul - Sep 2025.
+              </li>
               <li contenteditable="true">Budget Sep 2025 sudah termasuk Spare Part.</li>
               <li contenteditable="true">Budget Transport merupakan Budget Transport CKD Import.</li>
               <li contenteditable="true">Diff. Budget MDFO vs Act Aug’25 terabsorb pada qty budget Sep’25.</li>
@@ -273,7 +223,7 @@
     </button>
   </div>
 </template>
-  
+
 <script>
 import axios from "axios";
 import * as XLSX from "xlsx";
@@ -291,12 +241,6 @@ export default {
   },
 
   methods: {
-
-    getField(row, index, type) {
-      if (index === 0) return row[`n0_${type}`];
-      if (index > 0) return row[`n${index}_${type}`];
-      return row[`n${index}_${type}`]; // negative like n-1
-    },
     // hitung rowspan untuk No
     rowspanNo(no) {
       return this.budget_mat.filter(r => r.nokol === no).length;
@@ -393,7 +337,6 @@ export default {
       return total;
     },
 
-
     percentageMaterial(row, field1, field2) {
       const total = parseFloat(row[field2]) || 0;
       if (!total) return "0%";
@@ -407,15 +350,13 @@ export default {
       return ((this.sumCKD(no, model, field) / total) * 100).toFixed(0) + "%";
     },
 
-    
-    totalPercentSales(field1, field2){
+    totalPercentSales(field1, field2) {
       const totalMats = this.sumAllAmountMats(field1);
       const totalSales = this.sumAllAmountSales(field2);
 
-      const totalPercent = ((totalMats/totalSales)*100).toFixed(0) + "%";
+      const totalPercent = ((totalMats / totalSales) * 100).toFixed(0) + "%";
       return totalPercent;
     },
-
 
     printA4() {
       window.print();
@@ -477,10 +418,6 @@ export default {
       const diff = (n0_amount_act - n0_amount_forecast) / n0_amount_act;
       return diff * 100;
     },
-
-
   }
-
 };
 </script>
-  

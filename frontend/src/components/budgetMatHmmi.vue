@@ -1,12 +1,12 @@
 <template>
   <!-- Filter control outside A4 page -->
   <div class="filter-bar">
-      <label for="month">Choose Start Month:</label>
-      <input type="month" id="month" v-model="selectedMonth" @change="applyFilter" />
+    <label for="month">Choose Start Month:</label>
+    <input type="month" id="month" v-model="selectedMonth" @change="applyFilter" />
   </div>
 
   <div id="printArea" class="a4-page">
-    <!-- For Make Border -->
+    <!-- For Make Border A4-->
     <div class="report-container">
       <!-- Report Header -->
       <div class="report-header">
@@ -64,26 +64,26 @@
             <th colspan="3">FORECAST</th>
             <th colspan="3">FORECAST</th>
           </tr>
-          <tr>
+          <tr class="thAct">
             <!-- Sub kolom -->
-            <th class="italic">PCS</th>
-            <th class="italic">KG</th>
-            <th class="italic">AMOUNT <br>(x1000)</th>
-            <th class="italic">PCS</th>
-            <th class="italic">KG</th>
-            <th class="italic">AMOUNT <br>(x1000)</th>
-            <th class="italic">PCS</th>
-            <th class="italic">KG</th>
-            <th class="italic">AMOUNT <br>(x1000)</th>
-            <th class="italic">PCS</th>
-            <th class="italic">KG</th>
-            <th class="italic">AMOUNT <br>(x1000)</th>
-            <th class="italic">PCS</th>
-            <th class="italic">KG</th>
-            <th class="italic">AMOUNT <br>(x1000)</th>
-            <th class="italic">PCS</th>
-            <th class="italic">KG</th>
-            <th class="italic">AMOUNT <br>(x1000)</th>
+            <th>PCS</th>
+            <th>KG</th>
+            <th>AMOUNT <br>(x1000)</th>
+            <th>PCS</th>
+            <th>KG</th>
+            <th>AMOUNT <br>(x1000)</th>
+            <th>PCS</th>
+            <th>KG</th>
+            <th>AMOUNT <br>(x1000)</th>
+            <th>PCS</th>
+            <th>KG</th>
+            <th>AMOUNT <br>(x1000)</th>
+            <th>PCS</th>
+            <th>KG</th>
+            <th>AMOUNT <br>(x1000)</th>
+            <th>PCS</th>
+            <th>KG</th>
+            <th>AMOUNT <br>(x1000)</th>
           </tr>
         </thead>
         <tbody>
@@ -96,6 +96,7 @@
               <td v-if="shouldShowModel(index)" :rowspan="rowspanModel(row.nokol, row.model)" class="bold">
                 {{ row.model }}
               </td>
+
               <td colspan="2" class="bold">Material</td>
               <!-- Σ Item (merge) -->
               <td v-if="shouldShowTotalItem(index)" :rowspan="3">
@@ -104,6 +105,7 @@
               <td>{{ formatNumber(row.n0_pcs_forecast) }}</td>
               <td>{{ formatNumber(row.n0_kg_forecast) }}</td>
               <td>{{ formatNumber(row.n0_amount_forecast) }}</td>
+
               <td>{{ formatNumber(row.n0_pcs_act) }}</td>
               <td>{{ formatNumber(row.n0_kg_act) }}</td>
               <td>{{ formatNumber(row.n0_amount_act) }}</td>
@@ -113,12 +115,15 @@
               <td>{{ formatNumber(row.n_pcs_forecast) }}</td>
               <td>{{ formatNumber(row.n_kg_forecast) }}</td>
               <td>{{ formatNumber(row.n_amount_forecast) }}</td>
+
               <td>{{ formatNumber(row.n1_pcs_forecast) }}</td>
               <td>{{ formatNumber(row.n1_kg_forecast) }}</td>
               <td>{{ formatNumber(row.n1_amount_forecast) }}</td>
+
               <td>{{ formatNumber(row.n2_pcs_forecast) }}</td>
               <td>{{ formatNumber(row.n2_kg_forecast) }}</td>
               <td>{{ formatNumber(row.n2_amount_forecast) }}</td>
+
               <td>{{ formatNumber(row.n3_pcs_forecast) }}</td>
               <td>{{ formatNumber(row.n3_kg_forecast) }}</td>
               <td>{{ formatNumber(row.n3_amount_forecast) }}</td>
@@ -141,7 +146,6 @@
 
                 <!-- Merge kolom CKD PCS dan Transport -->
                 <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n0_pcs_forecast') }}</td>
-
                 <td v-if="isSameCKD(row.nokol, row.model, 'n0_kg_forecast')" :rowspan="2">
                   {{ formatNumber(row.n0_kg_forecast) }}
                 </td>
@@ -153,7 +157,6 @@
                 </td>
 
                 <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n0_pcs_act') }}</td>
-
                 <td v-if="isSameCKD(row.nokol, row.model, 'n0_kg_act')" :rowspan="2">
                   {{ formatNumber(row.n0_kg_act) }}
                 </td>
@@ -167,7 +170,6 @@
                 <td style="color: red;">{{ formatNumber(row.difference * 100) }}%</td>
 
                 <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n_pcs_forecast') }}</td>
-
                 <td v-if="isSameCKD(row.nokol, row.model, 'n_kg_forecast')" :rowspan="2">
                   {{ formatNumber(row.n_kg_forecast) }}
                 </td>
@@ -179,7 +181,6 @@
                 </td>
 
                 <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n1_pcs_forecast') }}</td>
-
                 <td v-if="isSameCKD(row.nokol, row.model, 'n1_kg_forecast')" :rowspan="2">
                   {{ formatNumber(row.n1_kg_forecast) }}
                 </td>
@@ -191,7 +192,6 @@
                 </td>
 
                 <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n2_pcs_forecast') }}</td>
-
                 <td v-if="isSameCKD(row.nokol, row.model, 'n2_kg_forecast')" :rowspan="2">
                   {{ formatNumber(row.n2_kg_forecast) }}
                 </td>
@@ -203,7 +203,6 @@
                 </td>
 
                 <td :rowspan="2">{{ sumCKD(row.nokol, row.model, 'n3_pcs_forecast') }}</td>
-
                 <td v-if="isSameCKD(row.nokol, row.model, 'n3_kg_forecast')" :rowspan="2">
                   {{ formatNumber(row.n3_kg_forecast) }}
                 </td>
@@ -220,15 +219,8 @@
               <tr>
                 <td class="bold">Transport</td>
 
-                <td v-if="!isSameCKD(row.nokol, row.model, 'n0_kg_forecast')">
-                  {{ formatNumber(row.n0_kg_forecast) }}
-                </td>
                 <td v-if="!isSameCKD(row.nokol, row.model, 'n0_amount_forecast')">
                   {{ formatNumber(row.n0_amount_forecast) }}
-                </td>
-
-                <td v-if="!isSameCKD(row.nokol, row.model, 'n0_kg_act')">
-                  {{ formatNumber(row.n0_kg_act) }}
                 </td>
 
                 <td v-if="!isSameCKD(row.nokol, row.model, 'n0_amount_act')">
@@ -237,30 +229,18 @@
 
                 <td style="color: red">{{ row.difference * 100 }}%</td>
 
-                <td v-if="!isSameCKD(row.nokol, row.model, 'n_kg_forecast')">
-                  {{ formatNumber(row.n_kg_forecast) }}
-                </td>
                 <td v-if="!isSameCKD(row.nokol, row.model, 'n_amount_forecast')">
                   {{ formatNumber(row.n_amount_forecast) }}
                 </td>
 
-                <td v-if="!isSameCKD(row.nokol, row.model, 'n1_kg_forecast')">
-                  {{ formatNumber(row.n1_kg_forecast) }}
-                </td>
                 <td v-if="!isSameCKD(row.nokol, row.model, 'n1_amount_forecast')">
                   {{ formatNumber(row.n1_amount_forecast) }}
                 </td>
 
-                <td v-if="!isSameCKD(row.nokol, row.model, 'n2_kg_forecast')">
-                  {{ formatNumber(row.n2_kg_forecast) }}
-                </td>
                 <td v-if="!isSameCKD(row.nokol, row.model, 'n2_amount_forecast')">
                   {{ formatNumber(row.n2_amount_forecast) }}
                 </td>
 
-                <td v-if="!isSameCKD(row.nokol, row.model, 'n3_kg_forecast')">
-                  {{ formatNumber(row.n3_kg_forecast) }}
-                </td>
                 <td v-if="!isSameCKD(row.nokol, row.model, 'n3_amount_forecast')">
                   {{ formatNumber(row.n3_amount_forecast) }}
                 </td>
@@ -540,9 +520,10 @@
           <!-- Notes Section -->
           <div class="notes-section">
             <div class="notes-content">
-              <p ><strong>Note:</strong></p>
+              <p><strong>Note:</strong></p>
               <ul>
-                <li contenteditable="true">Budget Material Sep 2025 menggunakan Material Price periode Jul - Sep 2025.</li>
+                <li contenteditable="true">Budget Material Sep 2025 menggunakan Material Price periode Jul - Sep 2025.
+                </li>
                 <li contenteditable="true">Budget Sep 2025 sudah termasuk Spare Part.</li>
                 <li contenteditable="true">Budget Transport merupakan Budget Transport CKD Import.</li>
                 <li contenteditable="true">Diff. Budget MDFO vs Act Aug’25 terabsorb pada qty budget Sep’25.</li>
@@ -551,12 +532,8 @@
             </div>
           </div>
 
-
           <!-- Signature Section -->
           <div class="signature-section">
-
-
-
             <table class="signature-table">
               <thead>
                 <tr>
@@ -668,11 +645,6 @@ export default {
       value = Number(value);
       // Convert to string and insert dot every 3 digits
       return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    },
-    sumMaterial(row) {
-      const pcs = parseFloat(row.total_item) || 0;
-      const transport = parseFloat(row.total_item) || 0;
-      return this.formatNumber(pcs + transport);
     },
     exportExcel() {
       const table = document.getElementById("budget-table");
