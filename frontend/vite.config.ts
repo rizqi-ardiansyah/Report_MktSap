@@ -17,4 +17,8 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  server: {
+    host: '0.0.0.0', // supaya bisa diakses lewat IP LAN
+    port: 5173       // biar konsisten
+  }
 })

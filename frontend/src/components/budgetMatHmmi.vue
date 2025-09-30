@@ -10,6 +10,7 @@
       <option value="">Balancing</option>
     </select>
 
+
     <label for="version">Version:</label>
     <select id="version" v-model="selectedVersion" @change="applyFilter">
       <option value="00">00</option>
