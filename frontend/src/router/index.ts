@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import budgetMatHmmi from '../components/budgetMatHmmi.vue'
 import budgetSoHmmi from '../components/budgetSoHmmi.vue'
 import ListCustomer from '../views/ListCustomer.vue'
+import portalMarketing from '../components/adminLayout.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +39,12 @@ const router = createRouter({
       path: '/listCustomer',
       name: 'ListCustomer',
       component: ListCustomer,
+
+    },
+    {
+      path: '/portalMarketing',
+      name: 'portalMarketing',
+      component: portalMarketing,
 
     }
   ],
