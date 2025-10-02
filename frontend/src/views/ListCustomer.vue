@@ -93,16 +93,15 @@ const groups = [
   [
     {
       name: "PT Astra Daihatsu Motor",
-      url: "https://portal.hmmi.com",
       image: "/src/assets/img/daihatsu.png",
       w: 250, h: 250,
       links: [
-        { label: "Forecasting", url: "https://forecast.daihatsu.astra.co.id"},
+        { label: "Portal Forecasting", url: "https://forecast.daihatsu.astra.co.id"},
         { label: "Portal Ordering & Billing", url: "https://assyst.daihatsu.astra.co.id/"},
         { label: "Portal GR", url: "https://adm-delvi.daihatsu.astra.co.id/Delvi/" }
       ]
     },
-    { name: "PT Toyota Manufacturing Indonesia", url: "https://portal.adm.com", image: "/src/assets/img/toyota.png" },
+    { name: "PT Toyota Manufacturing Indonesia", url: "https://portal.toyota.co.id/", image: "/src/assets/img/toyota.png" },
     { name: "PT Adyawinsa Stamping Indonesia", url: "https://portal.adm.com", image: "/src/assets/img/adyawinsa.png" },
     { name: "PT Gaya Motor", url: "https://portal.adm.com", image: "/src/assets/img/gayaMotor.png", w: 150, h: 250},
     { name: "PT Fuji Technica Indonesia", url: "https://portal.adm.com", image: "/src/assets/img/fuji-technica.png", w: 350, h: 250},
@@ -111,20 +110,27 @@ const groups = [
   [
     {
       name: "PT Hyundai Motor Manufacturing Indonesia",
-      url: "https://portal.mkm.com",
       image: "/src/assets/img/hyundai.png",
       w: 230, h:250,
       links: [
-        { label: "Portal MKM", url: "https://portal.mkm.com" },
-        { label: "Portal MMKI", url: "https://portal.mmki.com" }
+        { label: "Portal Information", url: "https://sp.hmmi.co.id/irj/portal/sp" },
+        { label: "Portal Billing", url: "https://partner.hyundai.com/gscm/" }
       ]
     },
-    { name: "PT Mitsubishi Krama Yudha Motors", url: "https://portal.mmki.com", image: "/src/assets/img/mkm.png", w: 220, h:250 },
+    { name: "PT Mitsubishi Krama Yudha Motors", url: "https://e2e.ptmkm.co.id/login", image: "/src/assets/img/mkm.png", w: 220, h:250 },
+    { name: "PT Mitsubishi Motor Kramayudha Indonesia", url: "https://e2e.ptmkm.co.id/login", image: "/src/assets/img/mitsubishi.png" },
     { name: "PT Krama Yudha Tiga Berlian Motors", url: "https://portal.mmki.com", image: "/src/assets/img/ktb.png",w: 250, h:250},
     { name: "PT Hanya Karya Bahana", url: "https://portal.mmki.com", image: "/src/assets/img/hkb.png",w: 250, h:250 },
-    { name: "PT Honda Prospect Motor", url: "https://portal.mmki.com", image: "/src/assets/img/honda.png",w: 200, h:250 },
-    { name: "PT Suzuki Indomobil Motor", url: "https://portal.mmki.com", image: "/src/assets/img/suzuki.png",w: 160, h:250 },
-    { name: "PT Summit Adyawinsa Indonesia", url: "https://portal.mmki.com", image: "/src/assets/img/summitAdyawinsa.png",w: 200, h:250 },
+    { name: "PT Honda Prospect Motor", url: "https://www.hpm.co.id:19757/login.aspx", image: "/src/assets/img/honda.png",w: 200, h:250 },
+    { name: "PT Suzuki Indomobil Motor",
+      image: "/src/assets/img/suzuki.png",w: 160, h:250,
+      links: [
+        { label: "Portal Information", url: "https://scs.suzuki.co.id/Login.aspx"},
+        { label: "Portal Bidding", url: "https://e-proc.suzuki.co.id/main/auth/login"},
+        { label: "Portal Ordering & Billing", url: "https://stn.suzuki.co.id/pur_portal/ICSLogin/" }
+      ],
+    },
+    { name: "PT Summit Adyawinsa Indonesia", url: "https://vendor.summitadyawinsa.co.id/", image: "/src/assets/img/summitAdyawinsa.png",w: 200, h:250 },
     { name: "PT Sanwa Manufacturing Indonesia", url: "https://portal.mmki.com", image: "/src/assets/img/sanwa.png",w: 700, h:250 },
     { name: "PT Chandra Nugerah Cipta", url: "https://portal.mmki.com", image: "/src/assets/img/cnc.png" },
     { name: "PT Inti Polymetal", url: "https://portal.mmki.com", image: "/src/assets/img/ipm.png", w: 210, h:250 },
