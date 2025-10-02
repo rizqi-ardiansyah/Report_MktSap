@@ -4,13 +4,13 @@
     <aside
       :class="[
         'bg-gradient-to-b from-white to-blue-400 text-black shadow-lg transition-all duration-300',
-        sidebarOpen ? 'w-64' : 'w-0 overflow-hidden'
+        sidebarOpen ? 'w-64' : 'w-0 overflow-hidden','print:hidden'
       ]"
     >
       <div v-if="sidebarOpen" class="flex flex-col h-full">
         <!-- Logo -->
         <div class="flex items-center gap-3 px-6 py-4 border-b border-blue-600">
-          <img src="@/assets/logoArmada.png" alt="Logo" class="w-40 h-8 object-contain" />
+          <img src="@/assets/img/logoArmada.png" alt="Logo" class="w-40 h-8 object-contain" />
         </div>
 
         <!-- Navigation -->
@@ -105,7 +105,7 @@
     <!-- Main content -->
     <div class="flex-1 flex flex-col transition-all duration-300">
       <!-- Header -->
-      <header class="bg-white shadow flex items-center justify-between px-6 py-3">
+      <header class="bg-white shadow flex items-center justify-between px-6 py-3 print:hidden">
         <div class="flex items-center gap-4">
           <!-- Toggle button -->
           <button @click="sidebarOpen = !sidebarOpen" class="p-2 rounded hover:bg-gray-200">
@@ -113,13 +113,13 @@
           </button>
           <h2 class="text-lg font-bold text-black">{{ currentMenu }}</h2>
         </div>
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-4 print:hidden">
           <input
             type="text"
             placeholder="Search..."
             class="px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring focus:ring-blue-300"
           />
-          <button class="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700">
+          <button class="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 print:hidden">
             Logout
           </button>
         </div>
@@ -135,14 +135,16 @@
           <p class="text-gray-600 mb-6">Select a portal or use the sidebar to navigate.</p>
         </div>
 
+         <router-view v-else />
+
         <!-- (Opsional) jika ingin menampilkan sesuatu spesifik pada Report parent -->
-        <div v-if="currentMenu === 'Report'">
+        <!-- <div v-if="currentMenu === 'Report'">
           <p class="text-gray-700">Pilih sub-report di sidebar.</p>
-        </div>
+        </div> -->
       </main>
 
       <!-- Footer -->
-      <footer class="bg-white shadow px-6 py-3 text-center text-gray-500 text-sm">
+      <footer class="bg-white shadow px-6 py-3 text-center text-gray-500 text-sm print:hidden">
         © 2025 New Armada. All rights reserved.
       </footer>
     </div>
@@ -174,7 +176,7 @@ const router = useRouter()
 // struktur menu: Report -> HMMI -> (Budget Material, Budget Sales Amount)
 const menu = [
   { name: 'Dashboard', icon: HouseIcon },
-  { name: 'Customer', icon: CarIcon },
+  { name: 'Customer', icon: CarIcon, path: '/listCustomer'},
   { name: 'Account', icon: CircleUserIcon },
   { name: 'Documentation', icon: FileTextIcon },
   {

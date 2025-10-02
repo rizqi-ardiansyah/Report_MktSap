@@ -9,7 +9,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/dashboard',
       name: 'Dashboard',
       component: HomeView,
     },
@@ -43,9 +43,29 @@ const router = createRouter({
     },
     {
       path: '/portalMarketing',
-      name: 'portalMarketing',
+      // name: 'portalMarketing',
       component: portalMarketing,
-
+        children: [
+        { path: '/listCustomer',
+          name: 'ListCustomer',
+          component: ListCustomer
+        },
+        {
+          path: '/budgetMatHmmi',
+          name: 'budgetMatHmmi',
+          component: budgetMatHmmi
+        },
+        {
+          path: '/budgetSoHmmi',
+          name: 'budgetSoHmmi',
+          component: budgetSoHmmi
+        },
+        // {
+        //   path: 'budgetTmmin',
+        //   name: 'budgetTmmin',
+        //   component: () => import('../components/budgetTmmin.vue')
+        // }
+      ]
     }
   ],
 })

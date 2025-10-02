@@ -401,6 +401,11 @@ td {
     visibility: hidden;
   }
 
+  .flex, .flex-1, main, .p-6 .overflow-y-auto .footer{
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
   .a4-page {
     width: 297mm;
     height: 210mm;
@@ -432,6 +437,10 @@ td {
     display: none;
   }
 }
+
+
+
+
 
 .page {
   display: flex;
