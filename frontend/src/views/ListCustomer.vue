@@ -27,7 +27,7 @@
             v-for="portal in group"
             :key="portal.name"
             class="bg-white rounded-xl p-6 text-center cursor-pointer shadow-md hover:shadow-xl transition-transform duration-300 hover:-translate-y-2 flex flex-col justify-center h-56"
-            @click="openPortal(portal.url)"
+            @click="handleClick(portal)"
           >
             <div class="flex items-center justify-center h-28 mb-3">
               <img
@@ -49,42 +49,116 @@
     <!-- <footer class="bg-gray-800 text-gray-200 text-center p-4 text-sm mt-auto">
       © 2025 Your Company. All rights reserved.
     </footer> -->
+
+    <!-- Popup Modal -->
+    <transition name="fade">
+      <div
+        v-if="selectedPortal"
+       class="fixed inset-0 bg-white bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-50 px-4 transition-opacity duration-300"
+      style="background-color: rgba(255, 255, 255, 0.7);">
+        <div class="bg-white bg-opacity-90 rounded-2xl shadow-2xl max-w-md w-full p-6 border border-gray-200">
+          <h2 class="text-xl font-bold mb-10 text-center" style="margin-bottom: 10px;">
+            Pilih Portal untuk {{ selectedPortal.name }}
+          </h2>
+
+          <div class="flex flex-col gap-2">
+            <button
+              v-for="(link, index) in selectedPortal.links"
+              :key="index"
+              class="bg-sky-600 hover:bg-sky-900 text-white py-2 px-5 rounded-lg transition-all duration-200"
+              @click="goToLink(link.url)"
+            >
+              {{ link.label }}
+            </button>
+          </div>
+
+          <button
+            class="mt-6 w-full bg-gray-400 hover:bg-gray-500 text-white py-2 px-4 rounded-lg transition-all duration-200"
+            @click="closePopup" style="margin-top: 20px;"
+          >
+            Batal
+          </button>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script setup>
+import { ref } from "vue"
+
+const selectedPortal = ref(null)
+
 const groups = [
   [
-    { name: "PT Astra Daihatsu Motor", url: "https://portal.hmmi.com", image: "/src/assets/img/daihatsu.png", w: 250, h: 250 },
+    {
+      name: "PT Astra Daihatsu Motor",
+      url: "https://portal.hmmi.com",
+      image: "/src/assets/img/daihatsu.png",
+      w: 250, h: 250,
+      links: [
+        { label: "Forecasting", url: "https://forecast.daihatsu.astra.co.id"},
+        { label: "Portal Ordering & Billing", url: "https://assyst.daihatsu.astra.co.id/"},
+        { label: "Portal GR", url: "https://adm-delvi.daihatsu.astra.co.id/Delvi/" }
+      ]
+    },
     { name: "PT Toyota Manufacturing Indonesia", url: "https://portal.adm.com", image: "/src/assets/img/toyota.png" },
     { name: "PT Adyawinsa Stamping Indonesia", url: "https://portal.adm.com", image: "/src/assets/img/adyawinsa.png" },
-    // { name: "ASI HDM", url: "https://portal.adm.com", image: "/src/assets/adyawinsa.png" },
-    // { name: "MES", url: "https://portal.adm.com", image: "/src/assets/img/logo.png" },
     { name: "PT Gaya Motor", url: "https://portal.adm.com", image: "/src/assets/img/gayaMotor.png", w: 150, h: 250},
+    { name: "PT Fuji Technica Indonesia", url: "https://portal.adm.com", image: "/src/assets/img/fuji-technica.png", w: 350, h: 250},
     { name: "PT Nusa Toyotesu", url: "https://portal.tmmin.com", image: "/src/assets/img/nusaToyotesu.png", w: 230, h: 250 },
-    // { name: "MES", url: "https://portal.tmmin.com", image: "/images/tmmin.png" },
   ],
   [
-    { name: "PT Hyundai Motor Manufacturing Indonesia", url: "https://portal.mkm.com", image: "/src/assets/img/hyundai.png", w: 230, h:250 },
+    {
+      name: "PT Hyundai Motor Manufacturing Indonesia",
+      url: "https://portal.mkm.com",
+      image: "/src/assets/img/hyundai.png",
+      w: 230, h:250,
+      links: [
+        { label: "Portal MKM", url: "https://portal.mkm.com" },
+        { label: "Portal MMKI", url: "https://portal.mmki.com" }
+      ]
+    },
     { name: "PT Mitsubishi Krama Yudha Motors", url: "https://portal.mmki.com", image: "/src/assets/img/mkm.png", w: 220, h:250 },
     { name: "PT Krama Yudha Tiga Berlian Motors", url: "https://portal.mmki.com", image: "/src/assets/img/ktb.png",w: 250, h:250},
     { name: "PT Hanya Karya Bahana", url: "https://portal.mmki.com", image: "/src/assets/img/hkb.png",w: 250, h:250 },
     { name: "PT Honda Prospect Motor", url: "https://portal.mmki.com", image: "/src/assets/img/honda.png",w: 200, h:250 },
+    { name: "PT Suzuki Indomobil Motor", url: "https://portal.mmki.com", image: "/src/assets/img/suzuki.png",w: 160, h:250 },
     { name: "PT Summit Adyawinsa Indonesia", url: "https://portal.mmki.com", image: "/src/assets/img/summitAdyawinsa.png",w: 200, h:250 },
     { name: "PT Sanwa Manufacturing Indonesia", url: "https://portal.mmki.com", image: "/src/assets/img/sanwa.png",w: 700, h:250 },
     { name: "PT Chandra Nugerah Cipta", url: "https://portal.mmki.com", image: "/src/assets/img/cnc.png" },
     { name: "PT Inti Polymetal", url: "https://portal.mmki.com", image: "/src/assets/img/ipm.png", w: 210, h:250 },
     { name: "PT Mitsubishi Motors Krama Yudha Sales Indonesia", url: "https://portal.mmki.com", image: "/src/assets/img/mitsubishi.png" },
-    // { name: "SGS-IPM", url: "https://portal.mmki.com", image: "/images/mmki.png" },
-    // { name: "SAI", url: "https://portal.mmki.com", image: "/images/mmki.png" },
-    // { name: "SANWA", url: "https://portal.mmki.com", image: "/images/mmki.png" },
-    // { name: "CNI", url: "https://portal.mmki.com", image: "/images/mmki.png" },
-    // { name: "CNC", url: "https://portal.mmki.com", image: "/images/mmki.png" },
-    // { name: "IPM", url: "https://portal.mmki.com", image: "/images/mmki.png" },
   ]
 ]
 
 function openPortal(url) {
   window.open(url, "_blank")
 }
+
+function handleClick(portal) {
+  if (portal.links && portal.links.length > 1) {
+    selectedPortal.value = portal
+  } else {
+    openPortal(portal.url)
+  }
+}
+
+function closePopup() {
+  selectedPortal.value = null
+}
+
+function goToLink(url) {
+  window.open(url, "_blank")
+  closePopup()
+}
 </script>
+
+<style>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+</style>
