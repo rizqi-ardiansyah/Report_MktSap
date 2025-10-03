@@ -14,7 +14,7 @@
         </div>
 
         <!-- Navigation -->
-        <nav class="flex-1 p-4 space-y-2 divide-y divide-sky-600">
+        <nav class="flex-1 p-4 space-y-1 divide-y divide-sky-600">
           <!-- level 1 -->
           <div v-for="(item, i) in menu" :key="i">
             <!-- item dengan children (misal: Report) -->
@@ -119,7 +119,7 @@
             placeholder="Search..."
             class="px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring focus:ring-blue-300"
           />
-          <button class="px-4 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 print:hidden">
+          <button @click="logout" class="px-4 py-2 bg-sky-600 text-white text-sm rounded-lg hover:bg-sky-900 print:hidden">
             Logout
           </button>
         </div>
@@ -135,12 +135,36 @@
           <p class="text-gray-600 mb-6">Select a portal or use the sidebar to navigate.</p>
         </div>
 
-         <router-view v-else />
+         <div v-else-if="currentMenu === 'Account'">
+          <h3 class="text-2xl font-bold text-gray-800 mb-4">
+            This is portal for account
+          </h3>
+          <p class="text-gray-600 mb-6">Select a portal or use the sidebar to navigate.</p>
+        </div>
 
-        <!-- (Opsional) jika ingin menampilkan sesuatu spesifik pada Report parent -->
-        <!-- <div v-if="currentMenu === 'Report'">
-          <p class="text-gray-700">Pilih sub-report di sidebar.</p>
-        </div> -->
+         <div v-else-if="currentMenu === 'Documentation'">
+          <h3 class="text-2xl font-bold text-gray-800 mb-4">
+            This is portal for documentation
+          </h3>
+          <p class="text-gray-600 mb-6">Select a portal or use the sidebar to navigate.</p>
+        </div>
+
+        <div v-else-if="currentMenu === 'Report' || currentMenu === 'HMMI' || currentMenu === 'ADM'">
+          <h3 class="text-2xl font-bold text-gray-800 mb-4">
+            This is portal for report
+          </h3>
+          <p class="text-gray-600 mb-6">Select a portal or use the sidebar to navigate.</p>
+        </div>
+
+
+         <div v-else-if="currentMenu === 'Others'">
+          <h3 class="text-2xl font-bold text-gray-800 mb-4">
+            This is portal for others
+          </h3>
+          <p class="text-gray-600 mb-6">Select a portal or use the sidebar to navigate.</p>
+        </div>
+
+        <router-view v-else />
       </main>
 
       <!-- Footer -->
@@ -194,11 +218,11 @@ const menu = [
       // ADM dan TMMIN adalah direct links (level 2 leaf)
       { name: 'ADM',
         children: [
-          { name: 'Budget Material', path: '/budgetMatHmmi' },
-          { name: 'Budget Sales Amount', path: '/budgetSoHmmi' }
+          { name: 'Budget Materials', path: '/budgetMatHmmi' },
+          { name: 'Budget Sales Amounts', path: '/budgetSoHmmi' }
         ]
        },
-      { name: 'TMMIN', path: '/budgetTmmin' }
+      // { name: 'TMMIN', path: '/budgetTmmin' }
     ]
   },
   { name: 'Others', icon: Menu }
@@ -242,5 +266,10 @@ function toggleSubDropdown(parentName, childName) {
     if (!openDropdown.value.includes(parentName)) openDropdown.value.push(parentName)
   }
   currentMenu.value = childName
+}
+
+function logout() {
+  localStorage.removeItem("auth")
+  router.push("/login")
 }
 </script>

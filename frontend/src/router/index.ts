@@ -4,14 +4,16 @@ import budgetMatHmmi from '../components/budgetMatHmmi.vue'
 import budgetSoHmmi from '../components/budgetSoHmmi.vue'
 import ListCustomer from '../views/ListCustomer.vue'
 import portalMarketing from '../components/adminLayout.vue'
+import Login from '../views/LoginPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/dashboard',
+      path: '/',
       name: 'Dashboard',
       component: HomeView,
+      meta: { requiresAuth: true }, // 🚀 butuh login
     },
     {
       path: '/about',
@@ -42,6 +44,12 @@ const router = createRouter({
 
     },
     {
+      path: '/login',
+      name: 'LoginPage',
+      component: Login,
+
+    },
+    {
       path: '/portalMarketing',
       // name: 'portalMarketing',
       component: portalMarketing,
@@ -65,9 +73,21 @@ const router = createRouter({
         //   name: 'budgetTmmin',
         //   component: () => import('../components/budgetTmmin.vue')
         // }
-      ]
+      ],
+      meta: { requiresAuth: true }, // 🚀 butuh login
     }
   ],
 })
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = localStorage.getItem("auth") === "true"
+
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    next("/login") // kalau belum login, redirect ke login
+  } else {
+    next() // kalau sudah login, lanjut
+  }
+})
+
 
 export default router

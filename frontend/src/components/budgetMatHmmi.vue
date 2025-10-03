@@ -27,7 +27,7 @@
       <div class="report-header">
         <div class="logo">
           <!-- replace with your logo path in /public -->
-          <img src="../assets/logo.png" alt="Company Logo" />
+          <img src="../assets/img/logo.png" alt="Company Logo" />
         </div>
         <div class="header-info">
           <div class="row">
@@ -591,7 +591,7 @@
 
   <div class="print-button">
     <button @click="printA4">
-      <img src="../assets/printer.png" alt="Print" class="icon" />
+      <img src="../assets/img/printer.png" alt="Print" class="icon" />
       Print
     </button>
   </div>

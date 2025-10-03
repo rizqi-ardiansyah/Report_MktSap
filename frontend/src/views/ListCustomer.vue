@@ -18,11 +18,11 @@
 
       <!-- Groups -->
       <div v-for="(group, gIndex) in groups" :key="gIndex">
-        <h3 class="text-xl font-semibold text-stone-900 mb-20" style="font-weight: bold;">
+        <h3 class="text-xl font-semibold text-stone-900" :class="{ 'mt-5': gIndex > 0 }" style="font-weight: bold;">
           Group {{ gIndex + 1 }}
         </h3>
 
-        <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-10 p-4 w-full">
+        <div class="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-8 p-4 w-full">
           <div
             v-for="portal in group"
             :key="portal.name"
@@ -37,7 +37,7 @@
                 :style="portal.w && portal.h ? `width:${portal.w}px;height:${portal.h}px;` : ''"
               />
             </div>
-            <h3 class="text-lg font-semibold text-gray-700" style="font-weight: 500; margin-top: 20px;">
+            <h3 class="text-lg font-semibold text-gray-700">
               {{ portal.name }}
             </h3>
           </div>
