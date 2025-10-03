@@ -67,7 +67,7 @@
   <button
     type="button"
     @click="goRegister"
-    class="flex-1 bg-sky-600 hover:bg-sky-900 text-white py-2 rounded-lg font-semibold shadow-md"
+    class="flex-1 bg-red-600 hover:bg-red-900 text-white py-2 rounded-lg font-semibold shadow-md"
   >
     Register
   </button>
