@@ -30,7 +30,7 @@
               <input
                 v-model="username"
                 type="text"
-                placeholder="your-email@gmail.com"
+                placeholder="Your Username"
                 class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-lg"
               />
             </div>

@@ -126,7 +126,8 @@
       </header>
 
       <!-- Content -->
-      <main class="flex-1 p-6 overflow-y-auto">
+      <main class="flex-1 p-6 overflow-y-auto"
+      :class="{ 'pt-0': currentMenu === 'Budget Material HMMI' || currentMenu === 'Budget Sales Amount HMMI' }">
         <!-- Contoh landing Dashboard -->
         <div v-if="currentMenu === 'Dashboard'">
           <h3 class="text-2xl font-bold text-gray-800 mb-4">
@@ -211,8 +212,8 @@ const menu = [
         name: 'HMMI',
         // HMMI punya submenu level 3
         children: [
-          { name: 'Budget Material', path: '/budgetMatHmmi' },
-          { name: 'Budget Sales Amount', path: '/budgetSoHmmi' }
+          { name: 'Budget Material HMMI', path: '/budgetMatHmmi' },
+          { name: 'Budget Sales Amount HMMI', path: '/budgetSoHmmi' }
         ]
       },
       // ADM dan TMMIN adalah direct links (level 2 leaf)

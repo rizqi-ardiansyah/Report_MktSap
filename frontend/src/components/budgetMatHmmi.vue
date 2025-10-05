@@ -1,4 +1,5 @@
 <template>
+  <div class="header-spacer"></div>
   <!-- Filter control outside A4 page -->
   <div class="filter-bar">
     <label for="month">Choose Start Month:</label>
