@@ -203,7 +203,6 @@ const menu = [
   { name: 'Dashboard', icon: HouseIcon, path: '/dashboard'},
   { name: 'Customer', icon: CarIcon, path: '/listCustomer'},
   { name: 'Account', icon: CircleUserIcon, path: '/account' },
-  { name: 'Documentation', icon: FileTextIcon },
   {
     name: 'Report',
     icon: FileCheckIcon,
@@ -226,7 +225,15 @@ const menu = [
       // { name: 'TMMIN', path: '/budgetTmmin' }
     ]
   },
-  { name: 'Others', icon: Menu }
+  { name: 'Others', icon: Menu,
+    children: [
+      {
+        name: 'Tracking Parsel',
+        path: '/trackParsel'
+      },
+      // { name: 'TMMIN', path: '/budgetTmmin' }
+    ]
+  }
 ]
 
 // helper: navigasi

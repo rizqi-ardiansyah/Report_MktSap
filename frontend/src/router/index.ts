@@ -7,6 +7,7 @@ import portalMarketing from '../components/adminLayout.vue'
 import Login from '../views/LoginPage.vue'
 import Dashboard from '../views/Dashboard.vue'
 import Account from '../views/Account.vue'
+import trackParsel from '../views/trackParsel.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -81,6 +82,11 @@ const router = createRouter({
           path: '/budgetSoHmmi',
           name: 'budgetSoHmmi',
           component: budgetSoHmmi
+        },
+         {
+          path: '/trackParsel',
+          name: 'trackParsel',
+          component: trackParsel
         },
         // {
         //   path: 'budgetTmmin',
