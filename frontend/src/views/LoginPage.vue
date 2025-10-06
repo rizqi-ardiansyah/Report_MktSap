@@ -217,7 +217,7 @@ function handleLogin() {
   if (isRegisteredUserValid || isDefaultUserValid) {
     const namaUser = isRegisteredUserValid ? savedUser.nama : defaultUser.nama
     alert(`Selamat datang, ${namaUser}!`)
-    localStorage.setItem("isLoggedIn", "true")
+    localStorage.setItem("auth", "true")
     router.push("/portalMarketing")
   } else {
     alert("Username atau password salah!")

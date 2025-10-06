@@ -22,7 +22,7 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
-      meta: { requiresAuth: true }, // 🚀 butuh login
+
     },
     {
       path: '/budgetMatHmmi',
@@ -31,51 +31,42 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: budgetMatHmmi,
-      meta: { requiresAuth: true }, // 🚀 butuh login
     },
     {
       path: '/budgetSoHmmi',
       name: 'budgetSoHmmi',
       component: budgetSoHmmi,
-      meta: { requiresAuth: true }, // 🚀 butuh login
 
     },
     {
       path: '/listCustomer',
       name: 'ListCustomer',
       component: ListCustomer,
-      meta: { requiresAuth: true }, // 🚀 butuh login
 
     },
     {
       path: '/login',
       name: 'LoginPage',
       component: Login,
-      // meta: { requiresAuth: true }, // 🚀 butuh login
-
     },
     {
       path: '/portalMarketing',
       // name: 'portalMarketing',
       component: portalMarketing,
         children: [
-        { path: 'listCustomer',
+        { path: '/listCustomer',
           name: 'ListCustomer',
-          component: ListCustomer,
-      meta: { requiresAuth: true }, // 🚀 butuh login
-
+          component: ListCustomer
         },
         {
-          path: 'budgetMatHmmi',
+          path: '/budgetMatHmmi',
           name: 'budgetMatHmmi',
-          component: budgetMatHmmi,
-      meta: { requiresAuth: true }, // 🚀 butuh login
+          component: budgetMatHmmi
         },
         {
-          path: 'budgetSoHmmi',
+          path: '/budgetSoHmmi',
           name: 'budgetSoHmmi',
-          component: budgetSoHmmi,
-      meta: { requiresAuth: true }, // 🚀 butuh login
+          component: budgetSoHmmi
         },
         // {
         //   path: 'budgetTmmin',
@@ -89,7 +80,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = localStorage.getItem("isLoggedIn") === "true"
+  const isAuthenticated = localStorage.getItem("auth") === "true"
 
   if (to.meta.requiresAuth && !isAuthenticated) {
     next("/login") // kalau belum login, redirect ke login
