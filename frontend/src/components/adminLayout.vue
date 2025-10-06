@@ -129,14 +129,14 @@
       <main class="flex-1 p-6 overflow-y-auto"
       :class="{ 'pt-0': currentMenu === 'Budget Material HMMI' || currentMenu === 'Budget Sales Amount HMMI' }">
         <!-- Contoh landing Dashboard -->
-        <div v-if="currentMenu === 'Dashboard'">
+        <!-- <div v-if="currentMenu === 'Dashboard'">
           <h3 class="text-2xl font-bold text-gray-800 mb-4">
             Welcome to New Portal for Team Marketing
           </h3>
           <p class="text-gray-600 mb-6">Select a portal or use the sidebar to navigate.</p>
-        </div>
+        </div> -->
 
-         <div v-else-if="currentMenu === 'Account'">
+         <div v-if="currentMenu === 'Account'">
           <h3 class="text-2xl font-bold text-gray-800 mb-4">
             This is portal for account
           </h3>
@@ -200,7 +200,7 @@ const router = useRouter()
 
 // struktur menu: Report -> HMMI -> (Budget Material, Budget Sales Amount)
 const menu = [
-  { name: 'Dashboard', icon: HouseIcon },
+  { name: 'Dashboard', icon: HouseIcon, path: '/dashboard'},
   { name: 'Customer', icon: CarIcon, path: '/listCustomer'},
   { name: 'Account', icon: CircleUserIcon },
   { name: 'Documentation', icon: FileTextIcon },

@@ -5,6 +5,7 @@ import budgetSoHmmi from '../components/budgetSoHmmi.vue'
 import ListCustomer from '../views/ListCustomer.vue'
 import portalMarketing from '../components/adminLayout.vue'
 import Login from '../views/LoginPage.vue'
+import Dashboard from '../views/Dashboard.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -54,6 +55,10 @@ const router = createRouter({
       // name: 'portalMarketing',
       component: portalMarketing,
         children: [
+        { path: '/dashboard',
+          name: 'Dashboard',
+          component: Dashboard
+        },
         { path: '/listCustomer',
           name: 'ListCustomer',
           component: ListCustomer
