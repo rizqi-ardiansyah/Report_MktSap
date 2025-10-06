@@ -102,7 +102,7 @@ const groups = [
       ]
     },
     { name: "PT Toyota Manufacturing Indonesia", url: "https://portal.toyota.co.id/", image: "/src/assets/img/toyota.png" },
-    { name: "PT Adyawinsa Stamping Indonesia", url: "https://portal.adm.com", image: "/src/assets/img/adyawinsa.png" },
+    { name: "PT Adyawinsa Stamping Indonesia", url: "https://mail.newarmada.co.id/?app=mail#search?query=from%3Aadyawinsa", image: "/src/assets/img/adyawinsa.png" },
     { name: "PT Gaya Motor", url: "https://portal.adm.com", image: "/src/assets/img/gayaMotor.png", w: 150, h: 250},
     { name: "PT Fuji Technica Indonesia", url: "https://portal.adm.com", image: "/src/assets/img/fuji-technica.png", w: 350, h: 250},
     { name: "PT Nusa Toyotesu", url: "https://portal.tmmin.com", image: "/src/assets/img/nusaToyotesu.png", w: 230, h: 250 },

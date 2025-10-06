@@ -136,14 +136,14 @@
           <p class="text-gray-600 mb-6">Select a portal or use the sidebar to navigate.</p>
         </div> -->
 
-         <div v-if="currentMenu === 'Account'">
+         <!-- <div v-if="currentMenu === 'Account'">
           <h3 class="text-2xl font-bold text-gray-800 mb-4">
             This is portal for account
           </h3>
           <p class="text-gray-600 mb-6">Select a portal or use the sidebar to navigate.</p>
-        </div>
+        </div> -->
 
-         <div v-else-if="currentMenu === 'Documentation'">
+         <div v-if="currentMenu === 'Documentation'">
           <h3 class="text-2xl font-bold text-gray-800 mb-4">
             This is portal for documentation
           </h3>
@@ -202,7 +202,7 @@ const router = useRouter()
 const menu = [
   { name: 'Dashboard', icon: HouseIcon, path: '/dashboard'},
   { name: 'Customer', icon: CarIcon, path: '/listCustomer'},
-  { name: 'Account', icon: CircleUserIcon },
+  { name: 'Account', icon: CircleUserIcon, path: '/account' },
   { name: 'Documentation', icon: FileTextIcon },
   {
     name: 'Report',
