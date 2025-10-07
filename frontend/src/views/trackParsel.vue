@@ -2,8 +2,18 @@
   <div class="p-6 bg-gray-50 min-h-screen">
     <h2 class="text-2xl font-bold mb-4 text-gray-800 text-center">Tracking Parsel</h2>
 
-    <!-- Tombol Tambah -->
-    <div class="flex justify-end mb-4">
+    <!-- Filter Tahun -->
+    <div class="flex justify-between items-center mb-4">
+      <div>
+        <label class="mr-2 font-medium text-gray-700">Pilih Tahun:</label>
+        <select v-model="selectedYear" class="border px-3 py-2 rounded-md">
+          <option v-for="year in Object.keys(yearColumns)" :key="year" :value="year">
+            {{ year }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Tombol Tambah -->
       <button
         @click="openCreateModal"
         class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md"
@@ -12,6 +22,7 @@
       </button>
     </div>
 
+    <!-- Tabel Data -->
     <div class="overflow-x-auto bg-white rounded-lg shadow">
       <table class="min-w-full border border-gray-300">
         <thead class="bg-blue-300 text-center">
@@ -20,13 +31,22 @@
             <th class="border p-2">Customer</th>
             <th class="border p-2">Nama</th>
             <th class="border p-2">Jabatan</th>
-            <th class="border p-2">Parcel Natal 2023</th>
-            <th class="border p-2">Kartu Natal 2023</th>
-            <th class="border p-2">Kue Bulan 2024</th>
-            <th class="border p-2">Natal 2024</th>
+            <th class="border p-2">Alamat</th>
+            <th class="border p-2">Telepon</th>
+
+            <!-- Kolom Dinamis Berdasarkan Tahun -->
+            <th
+              v-for="col in yearColumns[selectedYear]"
+              :key="col.key"
+              class="border p-2"
+            >
+              {{ col.label }}
+            </th>
+
             <th class="border p-2">Aksi</th>
           </tr>
         </thead>
+
         <tbody>
           <tr
             v-for="(item, index) in parselData"
@@ -37,18 +57,16 @@
             <td class="border p-2">{{ item.customer }}</td>
             <td class="border p-2">{{ item.nama }}</td>
             <td class="border p-2">{{ item.jabatan }}</td>
+            <td class="border p-2">{{ item.alamat }}</td>
+            <td class="border p-2">{{ item.telepon }}</td>
 
-            <td class="border p-2">
-              <input type="checkbox" v-model="item.parcelNatal2023" @change="saveLocalData" />
-            </td>
-            <td class="border p-2">
-              <input type="checkbox" v-model="item.kartuNatal2023" @change="saveLocalData" />
-            </td>
-            <td class="border p-2">
-              <input type="checkbox" v-model="item.kueBulan2024" @change="saveLocalData" />
-            </td>
-            <td class="border p-2">
-              <input type="checkbox" v-model="item.natal2024" @change="saveLocalData" />
+            <!-- Input dinamis berdasarkan key -->
+            <td
+              v-for="col in yearColumns[selectedYear]"
+              :key="col.key"
+              class="border p-2"
+            >
+              <input type="checkbox" v-model="item[col.key]" @change="saveLocalData" />
             </td>
 
             <td class="border p-2">
@@ -173,7 +191,33 @@
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
+import Swal from "sweetalert2";
 
+const selectedYear = ref("2024");
+
+// 🔹 Daftar kolom per tahun (kunci tunggal)
+const yearColumns = {
+  2023: [
+    { key: "kueImlek2023", label: "Kue Imlek 2023" },
+    { key: "parcelLebaran2023", label: "Parsel Lebaran 2023" },
+    { key: "parcelBuah2023", label: "Parsel Buah 2023" },
+    { key: "parcelNatal2023", label: "Parsel Natal 2023" },
+  ],
+  2024: [
+    { key: "kueImlek2024", label: "Kue Imlek 2024" },
+    { key: "parcelLebaran2024", label: "Parsel Lebaran 2024" },
+    { key: "parcelBuah2024", label: "Parsel Buah 2024" },
+    { key: "parcelNatal2024", label: "Parsel Natal 2024" },
+  ],
+  2025: [
+    { key: "kueImlek2025", label: "Kue Imlek 2025" },
+    { key: "parcelLebaran2025", label: "Parsel Lebaran 2025" },
+    { key: "parcelBuah2025", label: "Parsel Buah 2025" },
+    { key: "parcelNatal2025", label: "Parsel Natal 2025" },
+  ],
+};
+
+// 🔹 Data Lokal
 const parselData = ref([]);
 
 const loadLocalData = () => {
@@ -189,22 +233,14 @@ const loadLocalData = () => {
         jabatan: "Manager Produksi",
         alamat: "Jl. Melati No. 10, Bekasi",
         telepon: "081234567890",
+        kueImlek2023: false,
+        parcelLebaran2023: true,
+        parcelBuah2023: true,
         parcelNatal2023: false,
-        kartuNatal2023: false,
-        kueBulan2024: false,
-        natal2024: false,
-      },
-      {
-        id: 2,
-        customer: "PT Toyota Manufacturing Indonesia",
-        nama: "Siti Rahma",
-        jabatan: "Supervisor",
-        alamat: "Jl. Anggrek No. 12, Jakarta",
-        telepon: "089876543210",
-        parcelNatal2023: true,
-        kartuNatal2023: true,
-        kueBulan2024: false,
-        natal2024: false,
+        kueBulan2024: true,
+        kueNatal2024: false,
+        hadiah2025: false,
+        souvenir2025: false,
       },
     ];
   }
@@ -214,7 +250,7 @@ const saveLocalData = () => {
   localStorage.setItem("parselData", JSON.stringify(parselData.value));
 };
 
-// =============== DETAIL ===============
+// 🔹 DETAIL
 const detailModal = ref(false);
 const selectedItem = ref({});
 
@@ -223,7 +259,7 @@ const showDetail = (item) => {
   detailModal.value = true;
 };
 
-// =============== EDIT ===============
+// 🔹 EDIT
 const editModal = ref(false);
 const editForm = ref({});
 let editingId = null;
@@ -240,28 +276,55 @@ const saveEdit = () => {
     parselData.value[index] = { ...editForm.value };
     saveLocalData();
     editModal.value = false;
+
+    Swal.fire({
+      icon: "success",
+      title: "Berhasil",
+      text: "Data berhasil diperbarui!",
+      timer: 1500,
+      showConfirmButton: false,
+    });
   }
 };
 
-// =============== DELETE ===============
-const deleteItem = (id) => {
-  if (confirm("Yakin ingin menghapus data ini?")) {
+// 🔹 DELETE pakai SweetAlert2
+const deleteItem = async (id) => {
+  const result = await Swal.fire({
+    title: "Yakin ingin menghapus?",
+    text: "Data yang dihapus tidak dapat dikembalikan!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Ya, hapus!",
+    cancelButtonText: "Batal",
+  });
+
+  if (result.isConfirmed) {
     parselData.value = parselData.value.filter((x) => x.id !== id);
     saveLocalData();
+
+    Swal.fire({
+      icon: "success",
+      title: "Terhapus!",
+      text: "Data berhasil dihapus.",
+      timer: 1500,
+      showConfirmButton: false,
+    });
   }
 };
 
-// =============== CREATE ===============
+// 🔹 CREATE
 const openCreateModal = () => {
-  alert("Fitur tambah data masih dalam pengembangan (mockup lokal).");
+  Swal.fire({
+    title: "Fitur Tambah Data",
+    text: "Fitur ini masih dalam pengembangan (mockup lokal).",
+    icon: "info",
+    confirmButtonText: "OK",
+  });
 };
 
 onMounted(loadLocalData);
-watch(
-  parselData,
-  () => {
-    saveLocalData();
-  },
-  { deep: true }
-);
+watch(parselData, saveLocalData, { deep: true });
 </script>
+

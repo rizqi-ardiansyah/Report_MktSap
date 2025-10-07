@@ -177,6 +177,7 @@
 </template>
 
 <script setup>
+import Swal from "sweetalert2";
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import {
@@ -277,7 +278,21 @@ function toggleSubDropdown(parentName, childName) {
 }
 
 function logout() {
-  localStorage.removeItem("auth")
-  router.push("/login")
+   Swal.fire({
+    title: "Yakin ingin logout?",
+    text: "Anda akan keluar dari sistem.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Ya, logout",
+    cancelButtonText: "Batal",
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      localStorage.removeItem("auth");
+      router.push("/login");
+      Swal.fire("Berhasil Logout", "Anda telah keluar dari sistem.", "success");
+    }
+  });
 }
 </script>
